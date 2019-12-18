@@ -1,0 +1,53 @@
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+#landingMenuSticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+.hidden {
+  display: none;
+  max-width: 0;
+}
+
+.reveal {
+  /* transition: opacity 1s ease-in-out; */
+  animation-duration: 1s;
+  animation-name: slidein;
+}
+
+#login-form {
+  height: 4px;
+}
+
+.menu-form {
+  min-height: 40px;
+}
+
+.menu-login-form {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+}
+.menu-form-el {
+  padding: 0 8px;
+}
+
+.sign-up {
+  margin-right: 8px;
+}
+
+@keyframes slidein {
+  from {
+    /* overflow: hidden; */
+
+    margin-left: 50%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
