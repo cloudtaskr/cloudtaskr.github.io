@@ -70,6 +70,7 @@ class App extends React.Component {
             this.setState({apiIsAwake: true})
           },4000)
         }
+        this.setState({apiIsAwake: true})
       })
       .catch(err => {
         this.setFeedbackMessage(
