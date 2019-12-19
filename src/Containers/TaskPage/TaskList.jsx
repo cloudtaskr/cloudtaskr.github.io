@@ -10,7 +10,8 @@ export default class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAddButton: false
+      showAddButton: false,
+      // tasks: []
     };
   }
 
@@ -18,7 +19,11 @@ export default class TaskList extends Component {
     this.setState({ 
       showAddButton: !this.state.showAddButton 
     });
-  };
+  }
+
+  // componentDidMount() {
+    // this.setState({ tasks: this.props.viewableTasks });
+  // }
 
   render() {
     return (
@@ -26,7 +31,7 @@ export default class TaskList extends Component {
         <Welcome {...this.props} />
         <Button onClick={this.toogleTaskMenu}>Add Task</Button>
         {this.state.showAddButton ? (
-          <AddTask fetchData={this.props.fetchData} showAddTaskMenu={this.addTaskMenu}/>
+          <AddTask fetchData={this.props.fetchData} showAddTaskMenu={this.toogleTaskMenu}/>
         ) : (
           ""
         )}
