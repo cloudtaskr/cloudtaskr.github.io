@@ -23,26 +23,41 @@ export default class Zones extends React.Component {
     super(props);
 
     this.state = {
-      // autocompleteInput: "",
+      address: "",
       zones: {
-        name: this.props.userObj.zones.name && this.props.zoneName,
-        address: this.props.userObj.zones.address,
-        lat: this.props.userObj.zones.lat,
-        lng: this.props.userObj.zones.lng
+        home: {
+          name: this.props.userObj.zones.home.name,
+          address: this.props.userObj.zones.home.address,
+          lat: this.props.userObj.zones.home.lat,
+          lng: this.props.userObj.zones.home.lng
+        },
+        work: {
+          name: this.props.userObj.zones.work.name,
+          address: this.props.userObj.zones.work.address,
+          lat: this.props.userObj.zones.work.lat,
+          lng: this.props.userObj.zones.work.lng
+        }
       },
       ready: true
     };
   }
-  handleZoneUpdate = event => {
+  handleZoneUpdate = (event, location) => {
     event.preventDefault();
 
     let updateZones = {
       zones: {
-        name: this.state.zones.name,
-        address: this.state.zones.address,
-        lat: this.state.zones.lat,
-        lng: this.state.zones.lng
-        // name: "1", address: "2", lat: "3", lng: "4"
+        home: {
+          name: this.state.zones.home.name,
+          address: this.state.zones.home.address,
+          lat: this.state.zones.home.lat,
+          lng: this.state.zones.home.lng
+        },
+        work: {
+          name: this.state.zones.work.name,
+          address: this.state.zones.work.address,
+          lat: this.state.zones.work.lat,
+          lng: this.state.zones.work.lng
+        }
       }
     };
 
@@ -50,73 +65,87 @@ export default class Zones extends React.Component {
       withCredentials: true
     })
       .then(response => {
-        this.props.setFlashMessage("Zones are set", true);
         // this.props.history.push("/tasks");
-        // this.props.setUser(response.data);
-        this.props.getUser();
-        // console.log("Zone Updated");
+        this.props.setUser(response.data);
+        console.log("Zone Updated");
+        this.props.setFlashMessage("Zones are set", true);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  handleZonesChange = event => {
-    let zones = { ...this.state.zones };
-    zones[event.target.name] = event.target.value;
-    // console.log(zones);
-    this.setState({ zones: zones });
-    // this.props.getUser();
-  };
-
-  clearHandleZoneChange = () => {
+  clearHandleZoneChange = location => {
     this.setState({
-      zones: {
-        name: "",
-        address: "",
-        lat: "",
-        lng: ""
-      }
+      address: ""
     });
   };
 
   handleChange = address => {
     // console.log(address);
-    this.setState({ zones: { address: address } });
+    this.setState({ address: address });
   };
 
-  handleSelect = address => {
+  handleSelect = (address, location) => {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        console.log("Success", latLng);
-        this.setState({
-          // autocompleteInput: address,
-          zones: {
-            name: this.state.zones.name,
+        // console.log("Success", latLng);
+        if (location === "home") {
+          this.setState({
             address: address,
-            lat: latLng.lat,
-            lng: latLng.lng
-          }
-        });
-        console.log(this.state);
+            zones: {
+              home: {
+                name: "home",
+                address: address,
+                lat: latLng.lat,
+                lng: latLng.lng
+              },
+              work: this.state.zones.work
+            }
+          });
+        }
+        if (location === "work") {
+          this.setState({
+            address: address,
+            zones: {
+              home: this.state.zones.home,
+              work: {
+                name: "work",
+                address: address,
+                lat: latLng.lat,
+                lng: latLng.lng
+              }
+            }
+          });
+        }
+        // console.log(this.state);
       })
       .catch(error => console.error("Error", error));
   };
   render() {
     // console.log(this.props);
-    console.log(this.state);
+    // console.log(this.state);
     // console.log("userObj zones.name",this.props.userObj.zones.name)
     // console.log("state zones.name",this.props.zones.name)
+    console.log(this.state.zones.home);
+    console.log(this.state);
+
     return (
       <Row>
         <Col>
-          <Form onSubmit={this.handleZoneUpdate}>
+          <Form
+            onSubmit={event => {
+              this.handleZoneUpdate(event, this.props.zoneName);
+            }}
+          >
             <PlacesAutocomplete
               name="address"
-              value={this.state.zones.address}
+              value={this.state.address}
               onChange={this.handleChange}
-              onSelect={this.handleSelect}
+              onSelect={address => {
+                this.handleSelect(address, this.props.zoneName);
+              }}
             >
               {({
                 getInputProps,
@@ -125,7 +154,10 @@ export default class Zones extends React.Component {
                 loading
               }) => (
                 <>
-                  <FormLabel>{this.props.zoneName.toUpperCase()}: </FormLabel>
+                  <FormLabel>
+                    {this.props.zoneName.toUpperCase()}:{" "}
+                    {this.props.userObj.zones[this.props.zoneName].address}
+                  </FormLabel>
                   <InputGroup>
                     <FormControl
                       {...getInputProps({
@@ -161,7 +193,9 @@ export default class Zones extends React.Component {
                     <InputGroup.Append>
                       <Button
                         variant="outline-secondary"
-                        onClick={this.handleZoneUpdate}
+                        onClick={event => {
+                          this.handleZoneUpdate(event, this.props.zoneName);
+                        }}
                       >
                         <FontAwesomeIcon icon={faSave} /> Save
                       </Button>

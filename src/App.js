@@ -9,7 +9,7 @@ import Landing from "./Components/Landing/Landing";
 import Signup from "./Components/SignUp/Signup";
 import Account from "./Components/Account/Account";
 import LogIn from "./Containers/LoginPage/Login";
-import LogInTest from "./Components/Login/Login";
+// import LogInTest from "./Components/Login/Login";
 import Task from "./Containers/TaskPage/Task";
 
 // Testing Components
@@ -17,7 +17,6 @@ import TaskList from "./Components/test-tasks/taskList";
 import AddTask from "./Components/test-tasks/addTask";
 import EditTask from "./Components/test-tasks/editTask";
 import DeleteTask from "./Components/test-tasks/deleteTask";
-import ZoneSearchInput from "./Components/ZoneSearchInput/ZoneSearchInput";
 import Loading from "./Components/Loading/Loading";
 
 // Styling
@@ -227,18 +226,7 @@ class App extends React.Component {
                 />
               )}
             />
-            <Route
-              exact
-              path="/login-test"
-              render={props => (
-                <LogInTest
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                />
-              )}
-            />
+            
             <Route
               exact
               path="/account"
@@ -332,7 +320,6 @@ class App extends React.Component {
                 />
               )}
             />
-            <Route exact path="/zone" component={ZoneSearchInput} />
           </Switch>
         </>
       );
