@@ -46,9 +46,9 @@ export default class Account extends Component {
     })
       .then(response => {
         
-        this.props.setFlashMessage("Username is set", true)
         // this.props.history.push("/tasks");
-        // this.props.setUser(response.data);
+        this.props.setUser(response.data);
+        this.props.setFlashMessage("Username is set", true)
         // this.props.getUser();
       })
       .catch(err => {
@@ -68,10 +68,38 @@ export default class Account extends Component {
       withCredentials: true
     })
       .then(response => {
-        this.props.setFlashMessage("Name is set", true)
         // this.props.history.push("/tasks");
-        // this.props.setUser(response.data);
+        this.props.setUser(response.data);
+        this.props.setFlashMessage("Name is set", true)
         // this.props.getUser();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  handleZoneUpdate = event => {
+    event.preventDefault();
+
+    let updateZones = {
+      zones: {
+        name: this.state.zones.name,
+        address: this.state.zones.address,
+        lat: this.state.zones.lat,
+        lng: this.state.zones.lng
+        // name: "1", address: "2", lat: "3", lng: "4"
+      }
+    };
+
+    Axios.post(`${baseURL}/api/editprofile/zones`, updateZones, {
+      withCredentials: true
+    })
+      .then(response => {
+        
+        // this.props.history.push("/tasks");
+        this.props.setUser(response.data);
+        console.log("Zone Updated");
+        this.props.setFlashMessage("Zones are set", true)
       })
       .catch(err => {
         console.log(err);

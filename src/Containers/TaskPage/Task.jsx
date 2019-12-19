@@ -12,6 +12,7 @@ import {
 // Project Components
 import Menu from "../../Components/Menu/Menu";
 import TaskList from "../../Containers/TaskPage/TaskList";
+// import AddTaskModal from "../../Components/test-tasks/addTaskModal";
 
 // Styling
 import "../../Components/Task/Task.css";
@@ -49,7 +50,7 @@ export default class Task extends Component {
                   <li>
                     <h4>
                       <FontAwesomeIcon icon={faCloud} listItem />
-                      Cloud Tasks
+                      Tasks
                     </h4>
                   </li>
                 </ul>
@@ -97,9 +98,11 @@ export default class Task extends Component {
               </Button>
             </Container>
           </aside>
+
           <section id="task-section">
             <TaskList {...this.props} viewableTasks={this.checkForTasks()} />
           </section>
+          
         </div>
       </>
     );
