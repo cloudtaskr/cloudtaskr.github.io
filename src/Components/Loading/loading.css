@@ -1,24 +1,28 @@
 @keyframes bouncing-loader {
-    to {
-      opacity: 0.1;
-      transform: translate3d(0, -1rem, 0);
-    }
+  to {
+    opacity: 0.1;
+    transform: translate3d(0, -1rem, 0);
   }
-  .bouncing-loader {
-    display: flex;
-    justify-content: center;
-  }
-  .bouncing-loader > div {
-    width: 1rem;
-    height: 1rem;
-    margin: 3rem 0.2rem;
-    background: #8385aa;
-    border-radius: 50%;
-    animation: bouncing-loader 0.6s infinite alternate;
-  }
-  .bouncing-loader > div:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-  .bouncing-loader > div:nth-child(3) {
-    animation-delay: 0.4s;
-  }
+}
+.bouncing-loader {
+  display: flex;
+  justify-content: center;
+}
+.bouncing-loader > div {
+  min-height: 100px;
+  min-width: 200px;
+  margin: 3rem 0.2rem;
+  /* background: #8385aa; */
+  background-image: url("https://cdn.clipart.email/77ef318cd05236eaad855517abaf23ba_clipart-happy-cloud_800-586.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* border-radius: 50%; */
+  animation: bouncing-loader 0.6s infinite alternate;
+}
+.bouncing-loader > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.bouncing-loader > div:nth-child(3) {
+  animation-delay: 0.4s;
+}

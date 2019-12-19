@@ -69,15 +69,16 @@ export default class Zones extends React.Component {
     // this.props.getUser();
   };
 
-clearHandleZoneChange = () => {
-  this.setState ({
-    zones: {
-    name: "",
-    address: "",
-    lat: "",
-    lng: ""
-  }})
-}
+  clearHandleZoneChange = () => {
+    this.setState({
+      zones: {
+        name: "",
+        address: "",
+        lat: "",
+        lng: ""
+      }
+    });
+  };
 
   handleChange = address => {
     // console.log(address);
@@ -111,90 +112,95 @@ clearHandleZoneChange = () => {
       <Row>
         <Col>
           <Form onSubmit={this.handleZoneUpdate}>
-            <InputGroup >
-              <FormLabel>{this.props.zoneName.toUpperCase()}:{" "}</FormLabel>
-              <PlacesAutocomplete
-                name="address"
-                value={this.state.zones.address}
-                onChange={this.handleChange}
-                onSelect={this.handleSelect}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading
-                }) => (
-                  <>
+            <PlacesAutocomplete
+              name="address"
+              value={this.state.zones.address}
+              onChange={this.handleChange}
+              onSelect={this.handleSelect}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading
+              }) => (
+                <>
+                  <FormLabel>{this.props.zoneName.toUpperCase()}: </FormLabel>
+                  <InputGroup>
                     <FormControl
                       {...getInputProps({
                         placeholder: "Search Places ...",
                         className: "location-search-input"
                       })}
                     />
-                    <div className="autocomplete-dropdown-container">
-                      {loading && <div>Loading...</div>}
-                      {suggestions.map(suggestion => {
-                        const className = suggestion.active
-                          ? "suggestion-item--active"
-                          : "suggestion-item";
-                        // inline style for demonstration purpose
-                        const style = suggestion.active
-                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                          : { backgroundColor: "#ffffff", cursor: "pointer" };
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, {
-                              className,
-                              style
-                            })}
-                          >
-                            <span>{suggestion.description}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
-              </PlacesAutocomplete>
-              {/* <ZoneSearchInput /> */}
-              <FormControl
-                type="hidden"
-                name="name"
-                value={this.state.zones.name}
-                // defaultValue={this.props.userObj && this.props.userObj.zones.name}
-                // onChange={e => this.handleZonesChange(e)}
-                // placeholder="Home"
-              />
-              <FormControl
-                type="hidden"
-                name="lat"
-                value={this.state.zones.lat}
-                // defaultValue={this.props.userObj && this.props.userObj.zones.lat}
-                // onChange={e => this.handleZonesChange(e)}
-                // placeholder="Enter a number"
-              />
-              <FormControl
-                type="hidden"
-                name="lng"
-                value={this.state.zones.lng}
-                // defaultValue={this.props.userObj && this.props.userObj.zones.lng}
-                // onChange={e => this.handleZonesChange(e)}
-                // placeholder="Enter a number"
-              />
+                    <FormControl
+                      type="hidden"
+                      name="name"
+                      value={this.state.zones.name}
+                      // defaultValue={this.props.userObj && this.props.userObj.zones.name}
+                      // onChange={e => this.handleZonesChange(e)}
+                      // placeholder="Home"
+                    />
+                    <FormControl
+                      type="hidden"
+                      name="lat"
+                      value={this.state.zones.lat}
+                      // defaultValue={this.props.userObj && this.props.userObj.zones.lat}
+                      // onChange={e => this.handleZonesChange(e)}
+                      // placeholder="Enter a number"
+                    />
+                    <FormControl
+                      type="hidden"
+                      name="lng"
+                      value={this.state.zones.lng}
+                      // defaultValue={this.props.userObj && this.props.userObj.zones.lng}
+                      // onChange={e => this.handleZonesChange(e)}
+                      // placeholder="Enter a number"
+                    />
 
-<InputGroup.Append>
-              <Button variant="outline-secondary" onClick={this.handleZoneUpdate}>
-                <FontAwesomeIcon icon={faSave} /> Save
-              </Button>
-            </InputGroup.Append>
-            <InputGroup.Append>
-              <Button variant="outline-secondary" onClick={this.clearHandleZoneChange}>
-                <FontAwesomeIcon icon={faStopCircle} /> Clear
-              </Button>
-            </InputGroup.Append>
-
-            </InputGroup>
+                    <InputGroup.Append>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={this.handleZoneUpdate}
+                      >
+                        <FontAwesomeIcon icon={faSave} /> Save
+                      </Button>
+                    </InputGroup.Append>
+                    <InputGroup.Append>
+                      <Button
+                        variant="outline-secondary"
+                        onClick={this.clearHandleZoneChange}
+                      >
+                        <FontAwesomeIcon icon={faStopCircle} /> Clear
+                      </Button>
+                    </InputGroup.Append>
+                  </InputGroup>
+                  <div className="autocomplete-dropdown-container">
+                    {loading && <div>Loading...</div>}
+                    {suggestions.map(suggestion => {
+                      const className = suggestion.active
+                        ? "suggestion-item--active"
+                        : "suggestion-item";
+                      // inline style for demonstration purpose
+                      const style = suggestion.active
+                        ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                        : { backgroundColor: "#ffffff", cursor: "pointer" };
+                      return (
+                        <div
+                          {...getSuggestionItemProps(suggestion, {
+                            className,
+                            style
+                          })}
+                        >
+                          <span>{suggestion.description}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </PlacesAutocomplete>
+            {/* <ZoneSearchInput /> */}
           </Form>
         </Col>
       </Row>
