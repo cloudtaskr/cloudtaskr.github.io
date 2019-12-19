@@ -50,7 +50,7 @@ export default class Task extends Component {
                   <li>
                     <h4>
                       <FontAwesomeIcon icon={faCloud} listItem />
-                      Cloud Tasks
+                      Tasks
                     </h4>
                   </li>
                 </ul>
