@@ -166,7 +166,7 @@ export default class Zones extends React.Component {
                 <>
                   <FormLabel>
                     {this.props.zoneName.toUpperCase()}:{" "}
-                    {this.props.userObj.zones[this.props.zoneName].address}
+                    {this.props.zoneName==="custom" ? "Custom" : this.props.userObj.zones[this.props.zoneName].address }
                   </FormLabel>
                   <InputGroup>
                     <FormControl
