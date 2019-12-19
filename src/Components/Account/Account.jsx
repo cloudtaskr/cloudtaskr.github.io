@@ -46,9 +46,9 @@ export default class Account extends Component {
     })
       .then(response => {
         
-        this.props.setFlashMessage("Username is set", true)
         // this.props.history.push("/tasks");
-        // this.props.setUser(response.data);
+        this.props.setUser(response.data);
+        this.props.setFlashMessage("Username is set", true)
         // this.props.getUser();
       })
       .catch(err => {
@@ -68,9 +68,9 @@ export default class Account extends Component {
       withCredentials: true
     })
       .then(response => {
-        this.props.setFlashMessage("Name is set", true)
         // this.props.history.push("/tasks");
-        // this.props.setUser(response.data);
+        this.props.setUser(response.data);
+        this.props.setFlashMessage("Name is set", true)
         // this.props.getUser();
       })
       .catch(err => {
@@ -96,12 +96,10 @@ export default class Account extends Component {
     })
       .then(response => {
         
-        this.props.setFlashMessage("Zones are set", true)
         // this.props.history.push("/tasks");
-        // this.props.setUser(response.data);
-
-        this.props.getUser();
+        this.props.setUser(response.data);
         console.log("Zone Updated");
+        this.props.setFlashMessage("Zones are set", true)
       })
       .catch(err => {
         console.log(err);
