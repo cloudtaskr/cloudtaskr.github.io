@@ -1,32 +1,39 @@
 import React from "react";
-import { FormLabel } from "react-bootstrap";
+import { FormLabel, InputGroup, Row, Col } from "react-bootstrap";
 import baseURL from "../../../services/base";
 import Axios from "axios";
 //components
-import ZoneSearchInput from "../../ZoneSearchInput/ZoneSearchInput"
+// import ZoneSearchInput from "../../ZoneSearchInput/ZoneSearchInput"
+
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng
+} from "react-places-autocomplete";
+
+import "../../../services/googleapi";
 
 // Styling
 import "../Account.css";
 import { Form, FormControl, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faStopCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default class Zones extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-          firstName: '',
-          lastName: '',
-          username: '',
-          zones: {
-            name: '',
-            address: '',
-            lat: '',
-            lng: ""
-          },
-          ready: true
-        }
-      }
-    handleZoneUpdate = event => {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      // autocompleteInput: "",
+      zones: {
+        name: this.props.userObj.zones.name && this.props.zoneName,
+        address: this.props.userObj.zones.address,
+        lat: this.props.userObj.zones.lat,
+        lng: this.props.userObj.zones.lng
+      },
+      ready: true
+    };
+  }
+  handleZoneUpdate = event => {
     event.preventDefault();
 
     let updateZones = {
@@ -43,87 +50,154 @@ export default class Zones extends React.Component {
       withCredentials: true
     })
       .then(response => {
-        
-        this.props.setFlashMessage("Zones are set", true)
+        this.props.setFlashMessage("Zones are set", true);
         // this.props.history.push("/tasks");
         // this.props.setUser(response.data);
-
         this.props.getUser();
-        console.log("Zone Updated");
+        // console.log("Zone Updated");
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-
-
   handleZonesChange = event => {
-    console.log(this.state)
     let zones = { ...this.state.zones };
     zones[event.target.name] = event.target.value;
-    console.log(event.target.vale);
+    // console.log(zones);
     this.setState({ zones: zones });
     // this.props.getUser();
   };
-    render() {
-        return (
-            <Form onSubmit={this.handleZoneUpdate}>
-                <Form.Group controlId="zones">
-                  <h3>Zones</h3>
-                  <FormLabel>Home:</FormLabel>
 
-                  <ZoneSearchInput />
-                  <FormControl
-                    type="text"
-                    name="name"
-                    defaultValue={this.props.userObj && this.props.userObj.zones.name}
-                    onChange={e => this.handleZonesChange(e)}
-                    placeholder="Home"
-                  />
-                  <FormControl
-                    type="text"
-                    name="address"
-                    defaultValue={this.props.userObj && this.props.userObj.zones.address}
-                    onChange={e => this.handleZonesChange(e)}
-                    placeholder="Enter a address"
-                  />
-                  <FormControl
-                    type="text"
-                    name="lat"
-                    defaultValue={this.props.userObj && this.props.userObj.zones.lat}
-                    onChange={e => this.handleZonesChange(e)}
-                    placeholder="Enter a number"
-                  />
-                  <FormControl
-                    type="text"
-                    name="lng"
-                    defaultValue={this.props.userObj && this.props.userObj.zones.lng}
-                    onChange={e => this.handleZonesChange(e)}
-                    placeholder="Enter a number"
-                  />
+clearHandleZoneChange = () => {
+  this.setState ({
+    zones: {
+    name: "",
+    address: "",
+    lat: "",
+    lng: ""
+  }})
+}
 
-                  {/* <FormLabel>Work:</FormLabel>
-                  <FormControl
-                    type="text"
-                    name="workZone"
-                    value={this.state.workZone}
-                    onChange={e => this.handleZonesChange(e)}
-                    placeholder="Enter your work address"
-                  /> */}
-                  {/* <FormLabel>Custom (coming soon):</FormLabel>
-                  <FormControl
-                    type="text"
-                    name="customZone"
-                    value={this.state.customZone}
-                    onChange={e => this.handleChange(e)}
-                    placeholder="Enter an address"
-                  /> */}
-                </Form.Group>
-                <div>
-                  <Button type="submit">Update</Button>
-                </div>
-              </Form>
-        )
-    }
+  handleChange = address => {
+    // console.log(address);
+    this.setState({ zones: { address: address } });
+  };
+
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        console.log("Success", latLng);
+        this.setState({
+          // autocompleteInput: address,
+          zones: {
+            name: this.state.zones.name,
+            address: address,
+            lat: latLng.lat,
+            lng: latLng.lng
+          }
+        });
+        console.log(this.state);
+      })
+      .catch(error => console.error("Error", error));
+  };
+  render() {
+    // console.log(this.props);
+    console.log(this.state);
+    // console.log("userObj zones.name",this.props.userObj.zones.name)
+    // console.log("state zones.name",this.props.zones.name)
+    return (
+      <Row>
+        <Col>
+          <Form onSubmit={this.handleZoneUpdate}>
+            <InputGroup >
+              <FormLabel>{this.props.zoneName.toUpperCase()}:{" "}</FormLabel>
+              <PlacesAutocomplete
+                name="address"
+                value={this.state.zones.address && ""}
+                onChange={this.handleChange}
+                onSelect={this.handleSelect}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading
+                }) => (
+                  <>
+                    <FormControl
+                      {...getInputProps({
+                        placeholder: "Search Places ...",
+                        className: "location-search-input"
+                      })}
+                    />
+                    <div className="autocomplete-dropdown-container">
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? "suggestion-item--active"
+                          : "suggestion-item";
+                        // inline style for demonstration purpose
+                        const style = suggestion.active
+                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, {
+                              className,
+                              style
+                            })}
+                          >
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+              </PlacesAutocomplete>
+              {/* <ZoneSearchInput /> */}
+              <FormControl
+                type="hidden"
+                name="name"
+                value={this.state.zones.name}
+                // defaultValue={this.props.userObj && this.props.userObj.zones.name}
+                // onChange={e => this.handleZonesChange(e)}
+                // placeholder="Home"
+              />
+              <FormControl
+                type="hidden"
+                name="lat"
+                value={this.state.zones.lat}
+                // defaultValue={this.props.userObj && this.props.userObj.zones.lat}
+                // onChange={e => this.handleZonesChange(e)}
+                // placeholder="Enter a number"
+              />
+              <FormControl
+                type="hidden"
+                name="lng"
+                value={this.state.zones.lng}
+                // defaultValue={this.props.userObj && this.props.userObj.zones.lng}
+                // onChange={e => this.handleZonesChange(e)}
+                // placeholder="Enter a number"
+              />
+
+<InputGroup.Append>
+              <Button variant="outline-secondary" onClick={this.handleZoneUpdate}>
+                <FontAwesomeIcon icon={faSave} /> Save
+              </Button>
+            </InputGroup.Append>
+            <InputGroup.Append>
+              <Button variant="outline-secondary" onClick={this.clearHandleZoneChange}>
+                <FontAwesomeIcon icon={faStopCircle} /> Clear
+              </Button>
+            </InputGroup.Append>
+
+            </InputGroup>
+          </Form>
+        </Col>
+      </Row>
+    );
+  }
 }
