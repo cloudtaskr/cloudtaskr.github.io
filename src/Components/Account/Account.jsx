@@ -186,11 +186,11 @@ export default class Account extends Component {
 
               <Zones setFlashMessage={this.props.setFlashMessage} getUser={this.props.getUser} 
                 userObj={this.props.userObj} zoneName="home" />
+              <hr />
 
           <Zones setFlashMessage={this.props.setFlashMessage} getUser={this.props.getUser} 
                 userObj={this.props.userObj} zoneName="work" />
             
-              <hr />
               <hr />
 
             
