@@ -62,15 +62,10 @@ class App extends React.Component {
             `${res.data.username} successfully logged in`,
             true
           );
-          setTimeout(() => {
-            this.setState({apiIsAwake: true})
-          },4000)
         } else {
           this.setFeedbackMessage(`No user is currently logged in`, false);
-          setTimeout(() => {
-            this.setState({apiIsAwake: true})
-          },4000)
         }
+        this.setState({apiIsAwake: true})
       })
       .catch(err => {
         this.setFeedbackMessage(
