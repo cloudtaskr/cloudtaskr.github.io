@@ -24,12 +24,12 @@ export default class Account extends Component {
       firstName: '',
       lastName: '',
       username: '',
-      zones: {
-        name: '',
-        address: '',
-        lat: '',
-        lng: ""
-      },
+      // zones: {
+      //   name: '',
+      //   address: '',
+      //   lat: '',
+      //   lng: ""
+      // },
       ready: true
     }
   }
@@ -78,49 +78,49 @@ export default class Account extends Component {
       });
   };
 
-  handleZoneUpdate = event => {
-    event.preventDefault();
-
-    let updateZones = {
-      zones: {
-        name: this.state.zones.name,
-        address: this.state.zones.address,
-        lat: this.state.zones.lat,
-        lng: this.state.zones.lng
-        // name: "1", address: "2", lat: "3", lng: "4"
-      }
-    };
-
-    Axios.post(`${baseURL}/api/editprofile/zones`, updateZones, {
-      withCredentials: true
-    })
-      .then(response => {
-        
-        this.props.setFlashMessage("Zones are set", true)
-        // this.props.history.push("/tasks");
-        // this.props.setUser(response.data);
-
-        this.props.getUser();
-        console.log("Zone Updated");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   handleChange = event => {
     console.log(this.state)
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleZonesChange = event => {
-    console.log(this.state)
-    let zones = { ...this.state.zones };
-    zones[event.target.name] = event.target.value;
-    console.log(event.target.vale);
-    this.setState({ zones: zones });
-    // this.props.getUser();
-  };
+  // handleZoneUpdate = event => {
+  //   event.preventDefault();
+
+  //   let updateZones = {
+  //     zones: {
+  //       name: this.state.zones.name,
+  //       address: this.state.zones.address,
+  //       lat: this.state.zones.lat,
+  //       lng: this.state.zones.lng
+  //       // name: "1", address: "2", lat: "3", lng: "4"
+  //     }
+  //   };
+
+  //   Axios.post(`${baseURL}/api/editprofile/zones`, updateZones, {
+  //     withCredentials: true
+  //   })
+  //     .then(response => {
+        
+  //       this.props.setFlashMessage("Zones are set", true)
+  //       // this.props.history.push("/tasks");
+  //       // this.props.setUser(response.data);
+
+  //       this.props.getUser();
+  //       console.log("Zone Updated");
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // handleZonesChange = event => {
+  //   console.log(this.state)
+  //   let zones = { ...this.state.zones };
+  //   zones[event.target.name] = event.target.value;
+  //   console.log(event.target.vale);
+  //   this.setState({ zones: zones });
+  //   // this.props.getUser();
+  // };
   render() {
     if (this.props.taskDataIsReady) {
       return (
@@ -185,7 +185,10 @@ export default class Account extends Component {
               <hr />
 
               <Zones setFlashMessage={this.props.setFlashMessage} getUser={this.props.getUser} 
-                userObj={this.props.userObj} />
+                userObj={this.props.userObj} zoneName="home" />
+
+          <Zones setFlashMessage={this.props.setFlashMessage} getUser={this.props.getUser} 
+                userObj={this.props.userObj} zoneName="work" />
             
               <hr />
               <hr />
