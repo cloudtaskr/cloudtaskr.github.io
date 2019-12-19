@@ -65,10 +65,10 @@ export default class Zones extends React.Component {
       withCredentials: true
     })
       .then(response => {
-        // this.props.history.push("/tasks");
         this.props.setUser(response.data);
         console.log("Zone Updated");
         this.props.setFlashMessage("Zones are set", true);
+        this.props.history.push("/account");
       })
       .catch(err => {
         console.log(err);
@@ -101,7 +101,12 @@ export default class Zones extends React.Component {
                 lat: latLng.lat,
                 lng: latLng.lng
               },
-              work: this.state.zones.work
+              work: {
+                name: this.props.userObj.zones.work.name,
+                address: this.props.userObj.zones.work.address,
+                lat: this.props.userObj.zones.work.lat,
+                lng: this.props.userObj.zones.work.lng
+              }
             }
           });
         }
@@ -109,7 +114,12 @@ export default class Zones extends React.Component {
           this.setState({
             address: address,
             zones: {
-              home: this.state.zones.home,
+              home: {
+                name: this.props.userObj.zones.home.name,
+                address: this.props.userObj.zones.home.address,
+                lat: this.props.userObj.zones.home.lat,
+                lng: this.props.userObj.zones.home.lng
+              },
               work: {
                 name: "work",
                 address: address,
