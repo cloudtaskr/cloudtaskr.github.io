@@ -6,10 +6,13 @@ import Welcome from "../../Components/Messages/Welcome";
 import ShowTasks from "../../Components/Task/ShowTasks";
 
 export default class TaskList extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  state = {
+    tasks: []
+  };
 
+  componentDidMount() {
+    this.setState({ tasks: this.props.viewableTasks });
+  }
   render() {
     return (
       <Container>
