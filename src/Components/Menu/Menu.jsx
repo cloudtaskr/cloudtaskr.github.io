@@ -62,7 +62,7 @@ export default class Menu extends React.Component {
           });
           this.props.setUser(response.data);
           this.props.fetchData();
-          this.props.history.push("/tasks");
+          this.props.history.push("/task");
           this.props.setFlashMessage("Login successful", true);
         })
         .catch(err => {
@@ -92,7 +92,7 @@ export default class Menu extends React.Component {
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
           {this.props.userObj ? (
-            <LinkContainer to="/tasks">
+            <LinkContainer to="/task">
               <Nav.Link>Task</Nav.Link>
             </LinkContainer>
           ) : (

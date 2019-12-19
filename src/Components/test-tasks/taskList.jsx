@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-// import axios from "axios";
-// import { NavLink } from 'react-router-dom';
-// import AddTask from "./addTask";
-// import LogInMenu from './logInMenu';
 import Menu from "../Menu/Menu";
 import { Button, Container, Row } from "react-bootstrap";
-// import AddTaskModal from "./addTaskModal";
-// import EditTaskModal from "./editTaskModal";
-// import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
-// import Signup from "../SignUp/Signup";
 import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,15 +10,15 @@ import {
   faTrash,
   faEllipsisV
 } from "@fortawesome/free-solid-svg-icons";
-// import axios from "axios";
-// import baseURL from "../../services/base";
+import AddTask from "./addTask";
 
 // import AddTask from "./addTask";
 export default class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAddTaskMenu: false
+      showAddTaskMenu: false,
+      title: ""
     };
   }
 
@@ -45,7 +37,7 @@ export default class TaskList extends Component {
     // axios.post(`${baseURL}/api/task/delete/${taskID}`,{withCredentials: true})
     // .then(res=>{
     //   this.props.fetchData()
-    //   this.props.history.push("/tasks");
+    //   this.props.history.push("/task");
     // })
   };
   displayAllTasks = () => {
@@ -90,15 +82,8 @@ export default class TaskList extends Component {
   };
 
   addTaskMenu = () => {
-    console.log("Add Task Menu");
-    this.setState({ showAddTaskMenu: true });
-    // const mainList = document.getElementById("main-task-list");
-    // const newTask = document.createElement("div")
-    // newTask.setAttribute("name","task")
-    // newTask.setAttribute("class","row")
-    // const addTaskHTML = "<div class='col'><input type='text' name='task'></div><div class='col'><button class='btn btn-primary fa fa-ellipsis-v'></button><button class='btn btn-warning fa fa-save' onClick='saveTask()'></button><button class='btn btn-danger fa fa-trash'></button></div>"
-    // newTask.innerHTML = addTaskHTML;
-    // mainList.appendChild(newTask)
+    // console.log("Add Task Menu");
+    this.setState({ showAddTaskMenu: !this.state.showAddTaskMenu });
   };
 
   // componentDidMount() {
@@ -114,7 +99,8 @@ export default class TaskList extends Component {
   // }
 
   render() {
-    // console.log('inside of render', this.props)
+    console.log("Render taskList");
+
     return (
       <div>
         {this.props.userObj ? (
@@ -127,26 +113,17 @@ export default class TaskList extends Component {
               fetchData={this.props.fetchData}
             />
             <Container>
-              <h2>
-                Welcome{" "}
-                <span>
-                  {this.props.userObj.firstName
-                    ? this.props.userObj.firstName
-                    : this.props.userObj.email}
-                </span>
-              </h2>
-              {/* <AddTask /> */}
+              {this.props.userObj.firstName ? (
+                <h2>Welcome {this.props.userObj.firstName}</h2>
+              ) : (
+                <h2>Welcome {this.props.userObj.username}</h2>
+              )}
+
               <Row style={{ margin: "5px" }}>
-                <Col sm={3}>
-                  <Link to="/task/add">Add Task (New Componenet)</Link>
-                  <br />
+                <Col sm={4}>
+                  <Button onClick={this.addTaskMenu}>Add Task</Button>
                 </Col>
-                <Col sm={3}>
-                  <Button onClick={this.addTaskMenu}>
-                    Add Task (New Line)
-                  </Button>
-                </Col>
-                <Col sm={6}>
+                <Col sm={8}>
                   <input
                     placeholder="Search for a task"
                     name="search"
@@ -154,10 +131,12 @@ export default class TaskList extends Component {
                   />
                 </Col>
               </Row>
-              {this.showAddTaskMenu ? (
-                <Row>
-                  <Col>Add Task</Col>
-                </Row>
+
+              {this.state.showAddTaskMenu ? (
+                <AddTask
+                  fetchData={this.props.fetchData}
+                  showAddTaskMenu={this.addTaskMenu}
+                />
               ) : (
                 ""
               )}

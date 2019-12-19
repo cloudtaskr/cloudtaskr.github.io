@@ -6,13 +6,13 @@ import BackgroundWithOverlay from "../../Components/BackgroundWithOverlay/Backgr
 import LoginForm from "../../Components/LoginForm/LoginForm";
 
 export default class Login extends Component {
-  checkUser = () => {
+  checkIfUser = () => {
     if (this.props.userObj) {
-      this.props.history.push("/tasks");
+      this.props.history.push("/task");
     }
   };
   render() {
-    this.checkUser();
+    this.checkIfUser();
     return (
       <Container>
         <BackgroundWithOverlay

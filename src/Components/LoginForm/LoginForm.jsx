@@ -33,7 +33,6 @@ export default class LoginForm extends Component {
         email: this.state.email,
         password: this.state.password
       };
-      console.log(user, baseURL, "!!!!");
 
       // Axios.post(`${baseURL}/api/login`, user, {
       //   withCredentials: true
@@ -41,28 +40,27 @@ export default class LoginForm extends Component {
       actions
         .logIn(user)
         .then(response => {
-          console.log("handleFormSubmit");
+          // console.log("handleFormSubmit");
           this.setState({
             email: "",
             password: ""
           });
           this.props.setUser(response.data);
-          this.props.history.push("/tasks");
+          this.props.history.push("/task");
           this.props.fetchData();
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     } else {
       // figure out how to flash message
-      console.log("please input both email and password");
+      // console.log("please input both email and password");
       this.toggleLoginButtonOff();
     }
   };
   //   form-class-name, formGroupEmailId, formGroupEmailClass, formGroupPasswordId, formGroupPasswordClass
   classesAndIds = formType => {
     let values, labels;
-    console.log("formType is " + formType);
     if (formType === "menu") {
       values = {
         formClassName: "menu-login-form",
@@ -88,10 +86,6 @@ export default class LoginForm extends Component {
       classesAndIds: { ...values },
       labels: labels
     });
-    console.log("values is ...");
-    console.log(values);
-    console.log("classesAndIds is ...");
-    console.log(this.state.classesAndIds);
   };
   render() {
     return (

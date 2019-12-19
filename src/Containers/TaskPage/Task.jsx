@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInbox,
@@ -8,22 +8,39 @@ import {
   faPlus,
   faCloud
 } from "@fortawesome/free-solid-svg-icons";
+
 // Project Components
-// import Menu from "../Menu/Menu";
+import Menu from "../../Components/Menu/Menu";
+import TaskList from "../../Containers/TaskPage/TaskList";
+import AddTaskModal from "../../Components/test-tasks/addTaskModal";
 
 // Styling
-import "./Task.css";
+import "../../Components/Task/Task.css";
 import { LinkContainer } from "react-router-bootstrap";
 
 export default class Task extends Component {
+  checkForTasks = () => {
+    if (this.props.filterTaskList.length > 0) {
+      return this.props.filterTaskList;
+    } else {
+      return {};
+    }
+  };
+
+  // addTasks = () => {
+  //   return <AddTaskModal />;
+  // };
+
   render() {
     return (
       <>
-        {/* <Menu
+        <Menu
+          id="landingMenuSticky"
           {...this.props}
-          logOut={this.props.logOut}
+          logout={this.props.logout}
           setUser={this.props.setUser}
-        /> */}
+          fetchData={this.props.fetchData}
+        />
         <div id="task-page">
           <aside id="task-sidebar">
             <Container>
@@ -74,15 +91,15 @@ export default class Task extends Component {
               </LinkContainer>
 
               <h3 className="sidebar-header">Tags</h3>
-              <h3 id="add-task">
-                <FontAwesomeIcon icon={faPlus} />
-              </h3>
+              <Button id="add-task">
+                <h3>
+                  <FontAwesomeIcon icon={faPlus} />
+                </h3>
+              </Button>
             </Container>
           </aside>
           <section id="task-section">
-            <Container>
-              <h3>Task List</h3>
-            </Container>
+            <TaskList {...this.props} viewableTasks={this.checkForTasks()} />
           </section>
         </div>
       </>

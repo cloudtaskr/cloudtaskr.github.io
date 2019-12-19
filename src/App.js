@@ -3,19 +3,21 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Axios from "axios";
 import baseURL from "./services/base";
+
 // Project Components
 import Landing from "./Components/Landing/Landing";
 import Signup from "./Components/SignUp/Signup";
 import Account from "./Components/Account/Account";
-import LogIn from "./Containers/Login/Login";
+import LogIn from "./Containers/LoginPage/Login";
 import LogInTest from "./Components/Login/Login";
-import Task from "./Components/Task/Task";
+import Task from "./Containers/TaskPage/Task";
 
 // Testing Components
 import TaskList from "./Components/test-tasks/taskList";
 import AddTask from "./Components/test-tasks/addTask";
 import EditTask from "./Components/test-tasks/editTask";
 import DeleteTask from "./Components/test-tasks/deleteTask";
+import ZoneSearchInput from "./Components/ZoneSearchInput/ZoneSearchInput";
 
 // Styling
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,120 +29,151 @@ class App extends React.Component {
     super(props);
     this.state = {
       userLoggedIn: null,
-      taskDataIsReady: false,
       listOfTasks: [],
-      filterTaskList: []
+      filterTaskList: [],
+      taskDataIsReady: false,
+      errorMsg: null,
+      successMsg: null
     };
   }
 
   /**
-   * run these functions when the component renders
-   * */
+   * after the first render react will run the functions in componentDidMount()
+   * any time setState() is called React will render the components again
+   */
   componentDidMount() {
-    console.log("yolo");
-
-    // if theres a user logged in then don't make a call to the server, else make a call to check if theres a user logged in
-    if (!this.state.userLoggedIn) {
-      this.getUser();
-    }
-    // if theres a user logged in then fetch the user data from the server
-    if (this.state.userLoggedIn) {
-      this.fetchData();
-    }
+    console.log("Mount App");
+    this.getUser();
   }
 
   /**
-   * get the user info and set the state
-   * */
+   * make call to server to get the user data and save to set state
+   */
   getUser = () => {
     Axios.get(`${baseURL}/api/isLoggedIn`, { withCredentials: true })
       .then(res => {
-        if (this.state.userLoggedIn) console.log("user state exists");
-
-        if (!this.state.userLoggedIn) console.log("user doens't exists");
-        this.setUser(res.data);
-        this.setFeedbackMessage(`User data retrieved, user: ${res}`, true);
-        console.log(res, this.state.userLoggedIn);
+        // if there is a user logged in then fetch the user data and set the state
+        if (res.data) {
+          this.setUser(res.data);
+          this.fetchData();
+          this.setFeedbackMessage(
+            `${res.data.username} successfully logged in`,
+            true
+          );
+        } else {
+          this.setFeedbackMessage(`No user is currently logged in`, false);
+        }
       })
       .catch(err => {
-        this.setFeedbackMessage(`User data not retrieved, err: ${err}`, false);
+        this.setFeedbackMessage(
+          `Failed to verify if there is a user logged in. Error: ${err}`,
+          false
+        );
       });
   };
 
-  // make call to server to fetch user data
+  /**
+   * make call to server to fetch user tasks and save to set state
+   */
   fetchData = () => {
     Axios.get(`${baseURL}/api/tasks`, { withCredentials: true })
-      .then(responseFromApi => {
+      .then(res => {
         this.setState({
-          listOfTasks: responseFromApi.data,
-          filterTaskList: responseFromApi.data
+          listOfTasks: res.data,
+          filterTaskList: res.data,
+          taskDataIsReady: true
         });
-        this.setState({ taskDataIsReady: true });
+        this.setFeedbackMessage(`User's data was successfully fetched`, true);
       })
       .catch(err => {
-        console.log(err);
+        this.setFeedbackMessage(
+          `Failed to retrieve user data. Error: ${err}`,
+          false
+        );
       });
   };
 
-  searchTaskInput = e => {
-    const keyPress = e.target.value;
-    let tasksCopy = [...this.state.listOfTasks];
-    console.log(tasksCopy);
-    let searchedTasks = tasksCopy.filter(eachTask => {
-      return eachTask.title.toLowerCase().includes(keyPress.toLowerCase());
-    });
-
-    this.setState({
-      search: e.target.value,
-      filterTaskList: searchedTasks
-    });
-  };
-
+  /**
+   * save the user data to the state
+   */
   setUser = userObj => {
     this.setState({
       userLoggedIn: userObj
     });
   };
 
+  /**
+   * logout the user from the backend and delete all user data from state
+   */
   logout = () => {
-    // console.log("logout function");
     Axios.get(`${baseURL}/api/logout`, { withCredentials: true })
-      .then(response => {
-        console.log("You logged out", response.data);
+      .then(res => {
         this.setUser(null);
-        this.setState({ listOfTasks: [], filterTaskList: [] });
-        this.setFeedbackMessage("Logout successful", true);
+        this.setState({
+          listOfTasks: [],
+          filterTaskList: [],
+          taskDataIsReady: false
+        });
+        this.setFeedbackMessage(`${res.data.message}`, true);
       })
       .catch(err => {
-        // console.log("You logged out", err);
-        this.setFeedbackMessage("Logout failed", false);
+        this.setFeedbackMessage(`Failed to logout user. Error: ${err}`, false);
       });
   };
 
-  setFeedbackMessage = (arg, itIsSuccess) => {
-    this.setState({ error: null, message: null });
-
+  /**
+   * displays flash messages to the user
+   * maybe later we can make this a component but you still will need something in state
+   * to decide when to show the component so is it worth it to make a component
+   */
+  setFeedbackMessage = (message, itIsSuccess) => {
     if (itIsSuccess) {
-      this.setState({ message: arg });
+      this.setState({
+        successMsg: message
+      });
     } else {
-      this.setState({ error: arg });
+      this.setState({
+        errorMsg: message
+      });
     }
 
+    // only display message for x amount of time
     setTimeout(() => {
-      this.setState({ error: null, message: null });
+      this.setState({
+        errorMsg: null,
+        successMsg: null
+      });
     }, 5500);
   };
 
+  /**
+   * filter the tasks list based on the search input and save the filtered list to state
+   */
+  searchTaskInput = e => {
+    const currentSearchValue = e.target.value;
+    let tasksListCopy = [...this.state.listOfTasks];
+    let filteredTasks = tasksListCopy.filter(eachTask => {
+      return eachTask.title
+        .toLowerCase()
+        .includes(currentSearchValue.toLowerCase());
+    });
+
+    this.setState({
+      filterTaskList: filteredTasks
+    });
+  };
+
   render() {
-    // console.log("in app.js", this.state.userLoggedIn);
+    console.log("Render App");
+
     return (
       <>
-        {this.state.message && (
-          <Alert variant={"success"}>{this.state.message}</Alert>
+        {this.state.successMsg && (
+          <Alert variant={"success"}>{this.state.successMsg}</Alert>
         )}
 
-        {this.state.error && (
-          <Alert variant={"danger"}>{this.state.error}</Alert>
+        {this.state.errorMsg && (
+          <Alert variant={"danger"}>{this.state.errorMsg}</Alert>
         )}
 
         <Switch>
@@ -158,7 +191,6 @@ class App extends React.Component {
               />
             )}
           />
-
           <Route
             exact
             path="/signup"
@@ -206,6 +238,8 @@ class App extends React.Component {
                 {...props}
                 userObj={this.state.userLoggedIn}
                 logout={this.logout}
+                getUser={this.getUser}
+                setFlashMessage={this.setFeedbackMessage}
                 setUser={this.setUser}
                 taskDataIsReady={this.state.taskDataIsReady}
               />
@@ -220,6 +254,10 @@ class App extends React.Component {
                 userObj={this.state.userLoggedIn}
                 logout={this.logout}
                 setUser={this.setUser}
+                ready={this.state.ready}
+                filterTaskList={this.state.filterTaskList}
+                searchTasksInput={this.searchTaskInput}
+                setFlashMessage={this.setFeedbackMessage}
                 fetchData={this.fetchData}
               />
             )}
@@ -285,6 +323,7 @@ class App extends React.Component {
               />
             )}
           />
+          <Route exact path="/zone" component={ZoneSearchInput} />
         </Switch>
       </>
     );

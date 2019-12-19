@@ -16,7 +16,7 @@ export default class LogIn extends Component {
   handleFormSubmit = async e => {
     e.preventDefault();
     let user = await actions.logIn(this.state);
-    this.props.history.push("/tasks");
+    this.props.history.push("/task");
     this.props.setUser({ ...user.data });
   };
 

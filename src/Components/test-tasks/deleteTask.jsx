@@ -13,7 +13,7 @@ export default class deleteTask extends React.Component {
         // this.props.getData();
         this.setState({ title: "", description: "" });
         this.props.fetchData();
-        this.props.history.push("/tasks");
+        this.props.history.push("/task");
       })
       .catch(error => console.log(error));
   }

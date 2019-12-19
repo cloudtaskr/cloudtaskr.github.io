@@ -1,92 +1,91 @@
 import React, { Component } from "react";
-// import Axios from 'axios';
-
-// import { Row } from "react-bootstrap";
-// import { Col } from "react-bootstrap";
 import {
+  Button,
+  Col,
+  Row,
   FormControl,
-  Form,
-  FormGroup,
-  FormLabel,
-  Container
+  InputGroup,
+  Form
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faList } from "@fortawesome/free-solid-svg-icons";
-import Menu from "../Menu/Menu";
-import axios from 'axios';
-import baseURL from "../../services/base"
 
-class AddTask extends Component {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+
+
+import axios from "axios";
+import baseURL from "../../services/base";
+
+
+
+export default class addTask extends Component {
+
+
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      description: ""
+      title: ""
     };
   }
 
   handleAddTask = event => {
     event.preventDefault();
-
     const title = this.state.title;
     const description = this.state.description;
-    axios.post(`${baseURL}/api/tasks`, { title, description },{withCredentials: true})
-    .then( () => {
-        // this.props.getData();
-        this.setState({title: "", description: ""});
-        this.props.fetchData()
-        this.props.history.push("/tasks");
-    })
-    .catch( error => console.log(error) )
-  }
+    if(title){
 
-  
-
+      axios
+      .post(
+        `${baseURL}/api/tasks`,
+        { title, description },
+        { withCredentials: true }
+        )
+        .then(() => {
+          // this.props.getData();
+          this.setState({ title: "", description: "" });
+          this.props.fetchData();
+          this.props.showAddTaskMenu();
+          // this.props.history.push("/tasks");
+        })
+        .catch(error => console.log(error));
+      }
+  };
   handleChange = event => {
     // console.log(event, event.target, event.target.value);
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+
   render() {
     return (
-      <div>
-        <Menu
-          id="landingMenuSticky"
-          {...this.props}
-          logout={this.props.logout}
-          setUser={this.props.setUser}
-          fetchData={this.props.fetchData}
-        />
-        <Container>
+      <Row>
+      
+        <Col>
           <Form onSubmit={this.handleAddTask}>
-            <FormLabel>
-              {" "}
-              <FontAwesomeIcon icon={faList} />{" "} Title: 
-            </FormLabel>
-            <FormControl
-              type="text"
-              name="title"
-              value={this.state.title}
-              onChange={e => this.handleChange(e)}
-              required
-            />
-            <FormLabel>Description:</FormLabel>
-            <FormControl
-              type="text"
-              name="description"
-              value={this.state.description}
-              onChange={e => this.handleChange(e)}
-            />
-            <FormGroup>
-              <button className="btn btn-danger" >
-                Create
-              </button>
-            </FormGroup>
+            <InputGroup>
+              <FormControl
+                type="text"
+                name="title"
+                value={this.state.title}
+                onChange={e => this.handleChange(e)}
+                required={true}
+                placeholder="Add a task"
+                aria-label="Add a task"
+                aria-describedby="basic-addon2"
+              />
+              <InputGroup.Append>
+                <Button
+                  variant="outline-secondary"
+                  onClick={this.handleAddTask}
+                >
+                  <FontAwesomeIcon icon={faSave} /> Save
+                </Button>
+                {/* <Button variant="outline-secondary"><FontAwesomeIcon icon={} /> Cancel</Button> */}
+              </InputGroup.Append>
+            </InputGroup>
           </Form>
-        </Container>
-      </div>
+        </Col>
+      </Row>
     );
   }
 }
-
-export default AddTask;

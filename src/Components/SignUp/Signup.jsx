@@ -44,7 +44,7 @@ export default class Signup extends Component {
             email: "",
             password: ""
           });
-          this.props.history.push("/tasks");
+          this.props.history.push("/task");
           this.props.setUser(response.data);
           // this.props.setFlashMessage("Sign up successful", true)
         })

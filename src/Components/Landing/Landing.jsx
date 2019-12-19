@@ -17,7 +17,7 @@ export default class Landing extends React.Component {
   }
 
   render() {
-    console.log("landing");
+    console.log('Render Landing')
     return (
       <>
         {/* HERO, landing page background image */}
@@ -29,7 +29,7 @@ export default class Landing extends React.Component {
         {/* welcome statement */}
         <Jumbotron className="hero-container">
           <h1 className="landing-title">
-            Get more done in your day with cloudTaskr... today!
+            Get more done in your day with cloudTaskr
           </h1>
           <div>
             <LinkContainer to="/signup">
@@ -45,7 +45,7 @@ export default class Landing extends React.Component {
           logout={this.props.logout}
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
-          setFlashMessage={this.props.setFlashMessage}
+          setFlashMessage = {this.props.setFlashMessage}
         />
 
         {/* Section 1 */}
