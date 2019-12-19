@@ -63,6 +63,7 @@ class App extends React.Component {
         } else {
           this.setFeedbackMessage(`No user is currently logged in`, false);
         }
+        this.setState({apiIsAwake: true})
       })
       .catch(err => {
         this.setFeedbackMessage(
