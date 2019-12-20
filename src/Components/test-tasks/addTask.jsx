@@ -33,17 +33,12 @@ export default class addTask extends Component {
     const description = this.state.description;
     if(title){
 
-      axios
-      .post(
-        `${baseURL}/api/tasks`,
-        { title, description },
-        { withCredentials: true }
-        )
+      axios.post(`${baseURL}/api/tasks`,{ title, description },{ withCredentials: true })
         .then(() => {
           // this.props.getData();
-          this.setState({ title: "", description: "" });
           this.props.fetchData();
           this.props.showAddTaskMenu();
+          this.setState({ title: "", description: "" });
           // this.props.history.push("/tasks");
         })
         .catch(error => console.log(error));

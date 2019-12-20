@@ -11,7 +11,7 @@ export default class deleteTask extends React.Component {
       })
       .then(() => {
         // this.props.getData();
-        this.setState({ title: "", description: "" });
+        // this.setState({ title: "", description: "" });
         this.props.fetchData();
         this.props.history.push("/task");
       })

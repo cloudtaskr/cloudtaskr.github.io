@@ -8,25 +8,39 @@ import {
   Form,
   FormGroup,
   FormLabel,
-  Container
+  Container,
+  Button
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import Menu from "../Menu/Menu";
 import axios from "axios";
 import baseURL from "../../services/base";
+import EditTaskZone from "./EditTaskZone.jsx";
+
+import Calendar from 'react-date-picker';
 
 class EditTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      description: ""
+      description: "",
+      showZoneInput: false,
+      zone: {
+        name: "",
+        address: "",
+        lat: "",
+        lng: ""
+      },
+      status: "",
+      duration: "",
+      date: "",
     };
   }
 
   componentDidMount() {
-    console.log(this);
+    // console.log(this);
 
     axios
       .get(`${baseURL}/api/task/edit/${this.props.match.params.id}`, {
@@ -43,17 +57,23 @@ class EditTask extends Component {
 
     const title = this.state.title;
     const description = this.state.description;
+    const zone = this.state.zone;
+    const status = this.state.status
+    const duration = this.state.duration
+    const date = this.state.date
+    console.log(zone);
     axios
       .post(
         `${baseURL}/api/task/edit/${this.props.match.params.id}`,
-        { title, description },
+        { title, description, zone, status, duration, date },
         { withCredentials: true }
       )
-      .then(() => {
+      .then(res => {
+        console.log(res);
         // this.props.getData();
-        this.setState({ title: "", description: "" });
+        // this.setState({ title: "", description: "" });
         this.props.fetchData();
-        this.props.history.push("/task");
+        // this.props.history.push("/task");
       })
       .catch(error => console.log(error));
   };
@@ -63,6 +83,50 @@ class EditTask extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+  selectZone = location => {
+    if (location === "home") {
+      console.log("home", this.state);
+      if (this.props.userObj.zones.home.address === "") {
+        this.setState({ showZoneInput: true, active: "home" });
+      } else {
+        this.setState({
+          zone: {
+            name: this.props.userObj.zones.home.name,
+            address: this.props.userObj.zones.home.address,
+            lat: this.props.userObj.zones.home.lat,
+            lng: this.props.userObj.zones.home.lng
+          },
+          showZoneInput: false,
+          active: "home"
+        });
+      }
+    }
+    if (location === "work") {
+      console.log("work", this.state);
+      this.setState({
+        zone: {
+          name: this.props.userObj.zones.work.name,
+          address: this.props.userObj.zones.work.address,
+          lat: this.props.userObj.zones.work.lat,
+          lng: this.props.userObj.zones.work.lng
+        },
+        showZoneInput: false,
+        active: "work"
+      });
+    }
+    if (location === "custom") {
+      console.log("custom", this.state);
+      this.toggleShowZoneInput();
+    }
+  };
+
+  toggleShowZoneInput = () => {
+    this.setState({
+      showZoneInput: !this.state.toggleShowZoneInput
+    });
+  };
+
   render() {
     return (
       <div>
@@ -86,6 +150,7 @@ class EditTask extends Component {
               onChange={e => this.handleChange(e)}
               required
             />
+            <hr />
             <FormLabel>Description:</FormLabel>
             <FormControl
               type="text"
@@ -93,6 +158,51 @@ class EditTask extends Component {
               value={this.state.description}
               onChange={e => this.handleChange(e)}
             />
+            <hr />
+            <FormLabel>
+              Zone: {this.state.zone.name === "" ?  "" : this.state.zone.name.toUpperCase() } - {" "}
+              {this.state.zone.name === "" ? "":this.state.zone.address } 
+            </FormLabel>
+            <EditTaskZone
+              userObj={this.props.userObj}
+              showZoneInput={this.state.showZoneInput}
+              selectZone={this.selectZone}
+              active={
+                this.state.active === ""
+                  ? this.state.zone.name
+                  : this.state.active
+              }
+            />
+            <hr />
+            <FormLabel>Duration:</FormLabel>
+            <FormControl
+              type="number"
+              name="duration"
+              value={this.state.duration}
+              onChange={e => this.handleChange(e)}
+            />
+            Minutes
+            <hr />
+            <FormLabel>Status:</FormLabel>
+            <FormControl
+              type="text"
+              name="status"
+              value={this.state.status}
+              onChange={e => this.handleChange(e)}
+            />
+            <hr />
+            <FormLabel>Date:</FormLabel>
+            <FormControl
+              type="text"
+              name="date"
+              value={this.state.date}
+              onChange={e => this.handleChange(e)}
+            />
+
+            <Calendar />
+
+            <hr />
+            
             <FormGroup>
               <button className="btn btn-warning">Update</button>
             </FormGroup>
