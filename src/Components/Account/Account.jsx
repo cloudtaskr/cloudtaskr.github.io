@@ -19,11 +19,11 @@ let pageBackground = {
 export default class Account extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
+      firstName: "",
+      lastName: "",
+      username: "",
       // zones: {
       //   name: '',
       //   address: '',
@@ -31,7 +31,7 @@ export default class Account extends Component {
       //   lng: ""
       // },
       ready: true
-    }
+    };
   }
 
   handleUsernameUpdate = event => {
@@ -45,10 +45,9 @@ export default class Account extends Component {
       withCredentials: true
     })
       .then(response => {
-        
         // this.props.history.push("/tasks");
         this.props.setUser(response.data);
-        this.props.setFlashMessage("Username is set", true)
+        this.props.setFlashMessage("Username is set", true);
         // this.props.getUser();
       })
       .catch(err => {
@@ -70,7 +69,7 @@ export default class Account extends Component {
       .then(response => {
         // this.props.history.push("/tasks");
         this.props.setUser(response.data);
-        this.props.setFlashMessage("Name is set", true)
+        this.props.setFlashMessage("Name is set", true);
         // this.props.getUser();
       })
       .catch(err => {
@@ -78,156 +77,99 @@ export default class Account extends Component {
       });
   };
 
-  handleZoneUpdate = event => {
-    event.preventDefault();
-
-    let updateZones = {
-      zones: {
-        name: this.state.zones.name,
-        address: this.state.zones.address,
-        lat: this.state.zones.lat,
-        lng: this.state.zones.lng
-        // name: "1", address: "2", lat: "3", lng: "4"
-      }
-    };
-
-    Axios.post(`${baseURL}/api/editprofile/zones`, updateZones, {
-      withCredentials: true
-    })
-      .then(response => {
-        
-        // this.props.history.push("/tasks");
-        this.props.setUser(response.data);
-        console.log("Zone Updated");
-        this.props.setFlashMessage("Zones are set", true)
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
   handleChange = event => {
-    console.log(this.state)
+    // console.log(this.state)
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  // handleZoneUpdate = event => {
-  //   event.preventDefault();
-
-  //   let updateZones = {
-  //     zones: {
-  //       name: this.state.zones.name,
-  //       address: this.state.zones.address,
-  //       lat: this.state.zones.lat,
-  //       lng: this.state.zones.lng
-  //       // name: "1", address: "2", lat: "3", lng: "4"
-  //     }
-  //   };
-
-  //   Axios.post(`${baseURL}/api/editprofile/zones`, updateZones, {
-  //     withCredentials: true
-  //   })
-  //     .then(response => {
-        
-  //       this.props.setFlashMessage("Zones are set", true)
-  //       // this.props.history.push("/tasks");
-  //       // this.props.setUser(response.data);
-
-  //       this.props.getUser();
-  //       console.log("Zone Updated");
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // handleZonesChange = event => {
-  //   console.log(this.state)
-  //   let zones = { ...this.state.zones };
-  //   zones[event.target.name] = event.target.value;
-  //   console.log(event.target.vale);
-  //   this.setState({ zones: zones });
-  //   // this.props.getUser();
-  // };
   render() {
-    if (this.props.taskDataIsReady) {
-      return (
-        <>
-          <Menu
-            id="landingMenuSticky"
-            {...this.props}
-            logout={this.props.logout}
-            setUser={this.props.setUser}
-          />
-          <div className="account-page" style={pageBackground}>
-            <div className="account-overlay"></div>
-          </div>
-          <Container className="account-container">
-            <h1>
-              Welcome{" "}
-              {this.props.userObj && this.props.userObj.firstName}
-            </h1>
-            <section>
-              <Form onSubmit={this.handleUsernameUpdate}>
-                <Form.Group controlId="username">
-                  <FormLabel>Set a Username:</FormLabel>
-                  <FormControl
-                    type="text"
-                    name="username"
-                    defaultValue={this.props.userObj && this.props.userObj.username}
-                    onChange={e => this.handleChange(e)}
-                    placeholder="Set a username"
-                  />
-                </Form.Group>
+    // if (this.props.taskDataIsReady) {
+    return (
+      <>
+        <Menu
+          id="landingMenuSticky"
+          {...this.props}
+          logout={this.props.logout}
+          setUser={this.props.setUser}
+        />
+        <div className="account-page" style={pageBackground}>
+          <div className="account-overlay"></div>
+        </div>
+        <Container className="account-container">
+          <h1>Welcome {this.props.userObj && this.props.userObj.firstName}</h1>
+          <section>
+            <Form onSubmit={this.handleUsernameUpdate}>
+              <Form.Group controlId="username">
+                <FormLabel>Set a Username:</FormLabel>
+                <FormControl
+                  type="text"
+                  name="username"
+                  defaultValue={
+                    this.props.userObj && this.props.userObj.username
+                  }
+                  onChange={e => this.handleChange(e)}
+                  placeholder="Set a username"
+                />
+              </Form.Group>
 
-                <div>
-                  <Button type="submit">Update</Button>
-                </div>
-              </Form>
+              <div>
+                <Button type="submit">Update</Button>
+              </div>
+            </Form>
 
-              <Form onSubmit={this.handleNameUpdate}>
-                <Form.Group controlId="name">
-                  <FormLabel>First Name:</FormLabel>
-                  <FormControl
-                    type="text"
-                    name="firstName"
-                    defaultValue={this.props.userObj && this.props.userObj.firstName}
-                    onChange={e => this.handleChange(e)}
-                    placeholder="Enter your first name"
-                  />
-                  <FormLabel>Last name:</FormLabel>
-                  <FormControl
-                    type="text"
-                    name="lastName"
-                    defaultValue={this.props.userObj && this.props.userObj.lastName}
-                    onChange={e => this.handleChange(e)}
-                    placeholder="Enter your last name"
-                  />
-                </Form.Group>
-                <div>
-                  <Button type="submit">Update</Button>
-                </div>
-              </Form>
+            <Form onSubmit={this.handleNameUpdate}>
+              <Form.Group controlId="name">
+                <FormLabel>First Name:</FormLabel>
+                <FormControl
+                  type="text"
+                  name="firstName"
+                  defaultValue={
+                    this.props.userObj && this.props.userObj.firstName
+                  }
+                  onChange={e => this.handleChange(e)}
+                  placeholder="Enter your first name"
+                />
+                <FormLabel>Last name:</FormLabel>
+                <FormControl
+                  type="text"
+                  name="lastName"
+                  defaultValue={
+                    this.props.userObj && this.props.userObj.lastName
+                  }
+                  onChange={e => this.handleChange(e)}
+                  placeholder="Enter your last name"
+                />
+              </Form.Group>
+              <div>
+                <Button type="submit">Update</Button>
+              </div>
+            </Form>
 
-              <hr />
-              <hr />
+            <hr />
+            <hr />
 
-              <Zones setFlashMessage={this.props.setFlashMessage} getUser={this.props.getUser} 
-                userObj={this.props.userObj} zoneName="home" />
-              <hr />
+            <Zones
+              setFlashMessage={this.props.setFlashMessage}
+              setUser={this.props.setUser}
+              userObj={this.props.userObj}
+              zoneName="home"
+            />
+            <hr />
 
-          <Zones setFlashMessage={this.props.setFlashMessage} getUser={this.props.getUser} 
-                userObj={this.props.userObj} zoneName="work" />
-            
-              <hr />
+            <Zones
+              setFlashMessage={this.props.setFlashMessage}
+              setUser={this.props.setUser}
+              userObj={this.props.userObj}
+              zoneName="work"
+            />
 
-            
-            </section>
-          </Container>
-        </>
-      );
-    } else {
-      return <Loading />;
-    }
+            <hr />
+          </section>
+        </Container>
+      </>
+    );
+    // } else {
+    //   return <Loading />;
+    // }
   }
 }

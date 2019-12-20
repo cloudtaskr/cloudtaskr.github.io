@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 // Custom Components
 import BackgroundWithOverlay from "../../Components/BackgroundWithOverlay/BackgroundWithOverlay";
 import LoginForm from "../../Components/LoginForm/LoginForm";
+import Menu from "../../Components/Menu/Menu";
 
 export default class Login extends Component {
   checkIfUser = () => {
@@ -14,13 +15,27 @@ export default class Login extends Component {
   render() {
     this.checkIfUser();
     return (
-      <Container>
-        <BackgroundWithOverlay
-          imgUrl="books-business-computer-connection-459654.jpg"
-          alpha=".2"
+      <>
+        <Menu
+          id="landingMenuSticky"
+          {...this.props}
+          logOut={this.props.logOut}
+          setUser={this.props.setUser}
+          fetchData={this.props.fetchData}
+          setFlashMessage={this.props.setFlashMessage}
         />
-        <LoginForm {...this.props} formType="form" />
-      </Container>
+        
+          <BackgroundWithOverlay
+            imgUrl="books-business-computer-connection-459654.jpg"
+            alpha=".2"
+          />
+
+          <Container className="sign-up-container">
+            <h1>Login</h1>
+            <LoginForm {...this.props} formType="form" />
+          </Container>
+       
+      </>
     );
   }
 }

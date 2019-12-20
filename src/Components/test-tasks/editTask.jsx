@@ -8,25 +8,35 @@ import {
   Form,
   FormGroup,
   FormLabel,
-  Container
+  Container,
+  Button
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import Menu from "../Menu/Menu";
 import axios from "axios";
 import baseURL from "../../services/base";
+import EditTaskZone from "./EditTaskZone.jsx";
 
 class EditTask extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      description: ""
+      description: "",
+      showZoneInput: false,
+      zone: {
+        name: "",
+        address: "",
+        lat: "",
+        lng: ""
+      },
+      active: ""
     };
   }
 
   componentDidMount() {
-    console.log(this);
+    // console.log(this);
 
     axios
       .get(`${baseURL}/api/task/edit/${this.props.match.params.id}`, {
@@ -43,17 +53,20 @@ class EditTask extends Component {
 
     const title = this.state.title;
     const description = this.state.description;
+    const zone = this.state.zone;
+    console.log(zone);
     axios
       .post(
         `${baseURL}/api/task/edit/${this.props.match.params.id}`,
-        { title, description },
+        { title, description, zone },
         { withCredentials: true }
       )
-      .then(() => {
+      .then(res => {
+        console.log(res);
         // this.props.getData();
-        this.setState({ title: "", description: "" });
+        // this.setState({ title: "", description: "" });
         this.props.fetchData();
-        this.props.history.push("/task");
+        // this.props.history.push("/task");
       })
       .catch(error => console.log(error));
   };
@@ -63,6 +76,50 @@ class EditTask extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+  selectZone = location => {
+    if (location === "home") {
+      console.log("home", this.state);
+      if (this.props.userObj.zones.home.address === "") {
+        this.setState({ showZoneInput: true, active: "home" });
+      } else {
+        this.setState({
+          zone: {
+            name: this.props.userObj.zones.home.name,
+            address: this.props.userObj.zones.home.address,
+            lat: this.props.userObj.zones.home.lat,
+            lng: this.props.userObj.zones.home.lng
+          },
+          showZoneInput: false,
+          active: "home"
+        });
+      }
+    }
+    if (location === "work") {
+      console.log("work", this.state);
+      this.setState({
+        zone: {
+          name: this.props.userObj.zones.work.name,
+          address: this.props.userObj.zones.work.address,
+          lat: this.props.userObj.zones.work.lat,
+          lng: this.props.userObj.zones.work.lng
+        },
+        showZoneInput: false,
+        active: "work"
+      });
+    }
+    if (location === "custom") {
+      console.log("custom", this.state);
+      this.toggleShowZoneInput();
+    }
+  };
+
+  toggleShowZoneInput = () => {
+    this.setState({
+      showZoneInput: !this.state.toggleShowZoneInput
+    });
+  };
+
   render() {
     return (
       <div>
@@ -86,6 +143,7 @@ class EditTask extends Component {
               onChange={e => this.handleChange(e)}
               required
             />
+            <hr />
             <FormLabel>Description:</FormLabel>
             <FormControl
               type="text"
@@ -93,6 +151,22 @@ class EditTask extends Component {
               value={this.state.description}
               onChange={e => this.handleChange(e)}
             />
+            <hr />
+            <FormLabel>
+              Zone: {this.state.zone.name === "" ?  "" : this.state.zone.name.toUpperCase() } - {" "}
+              {this.state.zone.name === "" ? "":this.state.zone.address } 
+            </FormLabel>
+            <EditTaskZone
+              userObj={this.props.userObj}
+              showZoneInput={this.state.showZoneInput}
+              selectZone={this.selectZone}
+              active={
+                this.state.active === ""
+                  ? this.state.zone.name
+                  : this.state.active
+              }
+            />
+            <hr />
             <FormGroup>
               <button className="btn btn-warning">Update</button>
             </FormGroup>

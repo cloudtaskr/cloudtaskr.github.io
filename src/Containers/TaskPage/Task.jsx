@@ -12,7 +12,8 @@ import {
 
 // Project Components
 import Menu from "../../Components/Menu/Menu";
-import TaskList from "../../Containers/TaskPage/TaskList";
+// import TaskList from "../../Containers/TaskPage/TaskList";
+import TaskList from "../../Components/test-tasks/taskList"
 // import AddTaskModal from "../../Components/test-tasks/addTaskModal";
 
 // Styling

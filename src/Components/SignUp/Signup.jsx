@@ -10,6 +10,7 @@ import Menu from "../Menu/Menu";
 
 // Styling
 import "./SignUp.css";
+import { Link } from "react-router-dom";
 
 export default class Signup extends Component {
   // state = {
@@ -101,7 +102,7 @@ export default class Signup extends Component {
               />
             </Form.Group>
             <div>
-              <Button type="submit">SignUp</Button>
+              <Button type="submit">SignUp</Button> <Link to="/login">Already have an account? Login</Link>
             </div>
           </Form>
         </Container>
