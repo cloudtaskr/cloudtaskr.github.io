@@ -96,7 +96,9 @@ export default class Menu extends React.Component {
               <Nav.Link>Task</Nav.Link>
             </LinkContainer>
           ) : (
-            <></>
+            <LinkContainer to="/">
+            <Nav.Link>Home</Nav.Link>
+          </LinkContainer>
           )}
         </Nav>
 
