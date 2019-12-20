@@ -31,7 +31,7 @@ class EditTask extends Component {
         lat: "",
         lng: ""
       },
-      active: "",
+      status: "",
       duration: ""
     };
   }
