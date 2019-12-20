@@ -22,7 +22,7 @@ import DeleteTask from "./Components/test-tasks/deleteTask";
 import Loading from "./Components/Loading/Loading";
 
 import { Navbar, Container } from "react-bootstrap";
-import Style from "./Components/css/styling"
+import Style from "./Components/css/styling";
 
 // Styling
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -45,8 +45,8 @@ class App extends React.Component {
       userLocation: {
         latitude: 0,
         longitude: 0
-      }
-      , showDurationAlert: true
+      },
+      showDurationAlert: true
     };
   }
 
@@ -116,18 +116,17 @@ class App extends React.Component {
     }
   };
 
-  filterDuration = (time) =>{
-  
-      let tasksListCopy = [...this.state.listOfTasks];
-      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.duration < time)
-      
+  filterDuration = time => {
+    let tasksListCopy = [...this.state.listOfTasks];
+    let filteredTasks = tasksListCopy.filter(
+      eachTask => eachTask.duration < time
+    );
 
-      this.setState({
-        filterTaskList: filteredTasks,
-        showDurationAlert: false
-      });
-    
-  }
+    this.setState({
+      filterTaskList: filteredTasks,
+      showDurationAlert: false
+    });
+  };
 
   /**
    * make call to server to get the user data and save to set state
@@ -186,8 +185,9 @@ class App extends React.Component {
   filterList = tag => {
     if (tag === "complete") {
       let tasksListCopy = [...this.state.listOfTasks];
-      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.status==="complete")
-      
+      let filteredTasks = tasksListCopy.filter(
+        eachTask => eachTask.status === "complete"
+      );
 
       this.setState({
         filterTaskList: filteredTasks
@@ -302,15 +302,15 @@ class App extends React.Component {
     if (this.state.apiIsAwake) {
       return (
         <>
-
-<NavBar id="landingMenuSticky" {...this.props}
-userObj={this.state.userLoggedIn}
-          logout={this.logout}
-          setUser={this.setUser}
-          fetchData={this.fetchData}
-          setFlashMessage={this.setFeedbackMessage}
+          <NavBar
+            id="landingMenuSticky"
+            {...this.props}
+            userObj={this.state.userLoggedIn}
+            logout={this.logout}
+            setUser={this.setUser}
+            fetchData={this.fetchData}
+            setFlashMessage={this.setFeedbackMessage}
           />
-
 
           {this.state.successMsg && (
             <Alert variant={"success"}>{this.state.successMsg}</Alert>
@@ -321,7 +321,7 @@ userObj={this.state.userLoggedIn}
           )}
 
           <Switch>
-          <Route
+            <Route
               exact
               path="/"
               render={props => (
