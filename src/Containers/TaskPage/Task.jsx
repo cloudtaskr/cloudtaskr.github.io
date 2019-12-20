@@ -20,6 +20,9 @@ import TaskList from "../../Components/test-tasks/taskList"
 import "../../Components/Task/Task.css";
 // import { LinkContainer } from "react-router-bootstrap";
 
+// testing calendar component
+// import Calendar from 'react-calendar';
+
 export default class Task extends Component {
   state = {
     allTasks: [],
@@ -136,13 +139,32 @@ export default class Task extends Component {
             viewableTasks={this.state.displayedTasks}
             // viewableTasks={this.props.filterTaskList}
             fetchData={this.props.fetchData}
-
-          />
+          />          
         </section>
+
+
+        <aside id="task-sidebar">
+          <Container>
+            <h2 className="sidebar-header">Today</h2>
+            <ul className="fa-ul">
+              Task for today
+            </ul>
+
+            <h3 className="sidebar-header">Upcoming</h3>
+
+            <ul className="fa-ul">
+              Upcoming task
+            </ul>
+          </Container>
+        </aside>
+
+
       </div>) : (<><h1>Not authorized, sign up to make your first task</h1>
           <LinkContainer to="/signup">
             <Button>Sign Up</Button>
           </LinkContainer></>)}
+
+        
         
       </>
     );
