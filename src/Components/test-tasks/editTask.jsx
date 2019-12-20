@@ -9,7 +9,8 @@ import {
   FormGroup,
   FormLabel,
   Container,
-  Button
+  Button,
+  Row
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
@@ -31,7 +32,8 @@ class EditTask extends Component {
         lat: "",
         lng: ""
       },
-      active: ""
+      status: "",
+      duration: ""
     };
   }
 
@@ -54,11 +56,13 @@ class EditTask extends Component {
     const title = this.state.title;
     const description = this.state.description;
     const zone = this.state.zone;
+    const status = this.state.status;
+    const duration = this.state.duration;
     console.log(zone);
     axios
       .post(
         `${baseURL}/api/task/edit/${this.props.match.params.id}`,
-        { title, description, zone },
+        { title, description, zone, status, duration },
         { withCredentials: true }
       )
       .then(res => {
@@ -79,7 +83,7 @@ class EditTask extends Component {
 
   selectZone = location => {
     if (location === "home") {
-      console.log("home", this.state);
+      // console.log("home", this.state);
       if (this.props.userObj.zones.home.address === "") {
         this.setState({ showZoneInput: true, active: "home" });
       } else {
@@ -120,6 +124,22 @@ class EditTask extends Component {
     });
   };
 
+  setDuration = time => {
+    this.setState({
+      duration: time
+    });
+
+    // console.log(this.state.duration)
+  };
+
+  setStatus = status => {
+    this.setState({
+      status: status
+    });
+
+    console.log(this.state.duration);
+  };
+
   render() {
     return (
       <div>
@@ -131,6 +151,8 @@ class EditTask extends Component {
           fetchData={this.props.fetchData}
         />
         <Container>
+        <Row>
+          
           <Form onSubmit={this.handleUpdateTask}>
             <FormLabel>
               {" "}
@@ -153,8 +175,11 @@ class EditTask extends Component {
             />
             <hr />
             <FormLabel>
-              Zone: {this.state.zone.name === "" ?  "" : this.state.zone.name.toUpperCase() } - {" "}
-              {this.state.zone.name === "" ? "":this.state.zone.address } 
+              Zone:{" "}
+              {this.state.zone.name === ""
+                ? ""
+                : this.state.zone.name.toUpperCase()}{" "}
+              - {this.state.zone.name === "" ? "" : this.state.zone.address}
             </FormLabel>
             <EditTaskZone
               userObj={this.props.userObj}
@@ -167,10 +192,85 @@ class EditTask extends Component {
               }
             />
             <hr />
+            <FormLabel>Duration:</FormLabel>
+            {/* <FormControl
+              type="number"
+              name="duration"
+              value={this.state.duration}
+              onChange={e => this.handleChange(e)}
+            />
+            Minutes */}
+
+            <Button
+              onClick={() => {
+                this.setDuration(5);
+              }}
+              variant={"outline-info"}
+              active={this.state.duration === "5" ? "active" : ""}
+            >
+              5 mins
+            </Button>
+            <Button
+              onClick={() => {
+                this.setDuration(15);
+              }}
+              variant={"outline-info"}
+              active={this.state.duration === "15" ? "active" : ""}
+            >
+              15 mins
+            </Button>
+            <Button
+              onClick={() => {
+                this.setDuration(30);
+              }}
+              variant={"outline-info"}
+              active={this.state.duration === "30" ? "active" : ""}
+            >
+              30 mins
+            </Button>
+            <Button
+              onClick={() => {
+                this.setDuration(60);
+              }}
+              variant={"outline-info"}
+              active={this.state.duration === "60" ? "active" : ""}
+            >
+              60 mins
+            </Button>
+            <hr />
+            <FormLabel>Status:</FormLabel>
+            {/* <FormControl
+              type="text"
+              name="status"
+              value={this.state.status}
+              onChange={e => this.handleChange(e)}
+            /> */}
+
+            <Button
+              onClick={() => {
+                this.setStatus("active");
+              }}
+              variant={"outline-danger"}
+              active={this.state.status === "active" ? "active" : ""}
+            >
+              Active
+            </Button>
+            <Button
+              onClick={() => {
+                this.setStatus("complete");
+              }}
+              variant={"outline-success"}
+              active={this.state.status === "complete" ? "active" : ""}
+            >
+              Complete
+            </Button>
+            <hr />
             <FormGroup>
               <button className="btn btn-warning">Update</button>
             </FormGroup>
           </Form>
+
+        </Row>
         </Container>
       </div>
     );
