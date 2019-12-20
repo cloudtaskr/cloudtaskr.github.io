@@ -80,13 +80,14 @@ export default class Menu extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  logoStyle = { width: "150px" };
   render() {
     return (
       <Navbar bg="dark" variant="dark" id={this.props.id}>
         {/* left side navbar */}
         <LinkContainer to="/">
           <Navbar.Brand>
-            <img src="/images/logo.png" style="height: 100" />
+            <img src="/images/logo.png" style={this.logoStyle} />
           </Navbar.Brand>
         </LinkContainer>
         <Nav className="mr-auto">
