@@ -25,7 +25,7 @@ export default class SmartTasks extends Component {
         >
         <Card style={{ width: "18rem" }} >
           <Card.Body>
-            <Card.Title>How's much free time do you have?!</Card.Title>
+            <Card.Title>How much free time do you have?</Card.Title>
             {/* <Card.Subtitle className="mb-2 text-muted">
               Card Subtitle
             </Card.Subtitle> */}
