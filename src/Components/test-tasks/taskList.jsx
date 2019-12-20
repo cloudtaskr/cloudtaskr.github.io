@@ -40,7 +40,7 @@ export default class TaskList extends Component {
     //   this.props.history.push("/task");
     // })
   };
-  
+
   displayAllTasks = () => {
     // console.log(this.props.filterTaskList)
     return this.props.filterTaskList.map(task => {
@@ -62,7 +62,7 @@ export default class TaskList extends Component {
             <h6>{task.description}</h6>
           </Col>
           <Col>
-          {Math.floor(
+          {/* {Math.floor(
                     this.props.distanceFunction(
                       this.props.userLocation.latitude,
                       this.props.userLocation.longitude,
@@ -70,7 +70,7 @@ export default class TaskList extends Component {
                       task.zone.lng,
                       "N"
                     )
-                  )}{" "}
+                  )}{" "} */}
                   miles away
           </Col>
           <Col>
@@ -119,13 +119,6 @@ export default class TaskList extends Component {
       <div>
         {this.props.userObj ? (
           <div>
-            <Menu
-              id="landingMenuSticky"
-              {...this.props}
-              logout={this.props.logout}
-              setUser={this.props.setUser}
-              fetchData={this.props.fetchData}
-            />
             <Container>
               {this.props.userObj.firstName ? (
                 <h2>Welcome {this.props.userObj.firstName}</h2>
