@@ -133,6 +133,8 @@ export default class Task extends Component {
             </Button>
           </Container>
         </aside>
+
+        
         <section id="task-section">
           <TaskList
             {...this.props}

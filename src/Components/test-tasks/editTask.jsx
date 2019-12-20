@@ -18,6 +18,8 @@ import axios from "axios";
 import baseURL from "../../services/base";
 import EditTaskZone from "./EditTaskZone.jsx";
 
+import Calendar from 'react-date-picker';
+
 class EditTask extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +34,8 @@ class EditTask extends Component {
         lng: ""
       },
       status: "",
-      duration: ""
+      duration: "",
+      date: "",
     };
   }
 
@@ -57,11 +60,12 @@ class EditTask extends Component {
     const zone = this.state.zone;
     const status = this.state.status
     const duration = this.state.duration
+    const date = this.state.date
     console.log(zone);
     axios
       .post(
         `${baseURL}/api/task/edit/${this.props.match.params.id}`,
-        { title, description, zone, status, duration },
+        { title, description, zone, status, duration, date },
         { withCredentials: true }
       )
       .then(res => {
@@ -187,6 +191,18 @@ class EditTask extends Component {
               onChange={e => this.handleChange(e)}
             />
             <hr />
+            <FormLabel>Date:</FormLabel>
+            <FormControl
+              type="text"
+              name="date"
+              value={this.state.date}
+              onChange={e => this.handleChange(e)}
+            />
+
+            <Calendar />
+
+            <hr />
+            
             <FormGroup>
               <button className="btn btn-warning">Update</button>
             </FormGroup>
