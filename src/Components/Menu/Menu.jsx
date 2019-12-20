@@ -12,7 +12,12 @@ import { Navbar, Nav } from "react-bootstrap";
 import "./Menu.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faTasks,
+  faSignOutAlt,
+  faWalking
+} from "@fortawesome/free-solid-svg-icons";
 
 export default class Menu extends React.Component {
   constructor(props) {
@@ -80,13 +85,13 @@ export default class Menu extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  logoStyle = { width: "150px" };
+  logoStyle = { width: "160px" };
   render() {
     return (
-      <Navbar bg="dark" variant="dark" id={this.props.id}>
+      <Navbar bg="info" variant="dark" id={this.props.id}>
         {/* left side navbar */}
         <LinkContainer to="/">
-          <Navbar.Brand>
+          <Navbar.Brand id="logo">
             <img src="/images/logo.png" style={this.logoStyle} />
           </Navbar.Brand>
         </LinkContainer>
@@ -94,11 +99,7 @@ export default class Menu extends React.Component {
           {/* <LinkContainer to="/">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer> */}
-          {this.props.userObj ? (
-            <LinkContainer to="/task">
-              <Nav.Link>Task</Nav.Link>
-            </LinkContainer>
-          ) : (
+          {!this.props.userObj && (
             <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
@@ -108,20 +109,38 @@ export default class Menu extends React.Component {
         {/* right side navbar */}
         {/* condition ? (true) : (false) */}
         {this.props.userObj ? (
-          <Nav>
-            <LinkContainer to="/account">
-              <Nav.Link className="sign-up">
-                <h5 style={{ color: "white" }}>
-                  <FontAwesomeIcon icon={faUser} />{" "}
-                  {this.props.userObj.username}
-                </h5>
-              </Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/">
-              <Nav.Link className="sign-up" onClick={this.props.logout}>
-                Logout
-              </Nav.Link>
-            </LinkContainer>
+          <Nav id="logged-right-nav">
+            <ul id="logged-right-list" className="fa-ul">
+              <li className="logged-items">
+                <LinkContainer to="/account">
+                  <Nav.Link className="sign-up">
+                    <h5 style={{ color: "white" }}>
+                      <FontAwesomeIcon icon={faUser} listItem />{" "}
+                      {this.props.userObj.username}
+                    </h5>
+                  </Nav.Link>
+                </LinkContainer>
+              </li>
+              <li className="logged-items">
+                <LinkContainer to="/task">
+                  <Nav.Link className="sign-up">
+                    <h5 style={{ color: "white" }}>
+                      <FontAwesomeIcon icon={faTasks} listItem /> Task
+                    </h5>
+                  </Nav.Link>
+                </LinkContainer>
+              </li>
+              <li className="logged-items">
+                <LinkContainer to="/">
+                  <Nav.Link className="sign-up" onClick={this.props.logout}>
+                    <h5 style={{ color: "white" }}>
+                      <FontAwesomeIcon icon={faWalking} listItem />
+                      Logout
+                    </h5>
+                  </Nav.Link>
+                </LinkContainer>
+              </li>
+            </ul>
           </Nav>
         ) : (
           <>
