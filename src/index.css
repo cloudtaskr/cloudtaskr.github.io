@@ -22,12 +22,14 @@ code {
 .add-task-button {
   position:fixed;
 	bottom:40px;
-	right:40px;
-	background-color: rgb(33, 113, 145);
+  right:40px;
+  
+  border-radius: 20px !important;
+  background-color: #2F0152 !important;
+  border-color: #2F0152 !important;
 	color:#FFF;
-	border-radius:25px;
 	text-align:center;
-  box-shadow: 2px 2px 3px #999;
+  box-shadow: 2px 2px 3px #FFF;
   z-index: 5;
   font-size: 24px;
   padding: 5px;

@@ -180,6 +180,7 @@ export default class TaskList extends Component {
           </div>
         ) : (
           <Container>
+            
             <h1>Not authorized, sign up to make your first task</h1>
             <LinkContainer to="/signup">
               <Button>Sign Up</Button>

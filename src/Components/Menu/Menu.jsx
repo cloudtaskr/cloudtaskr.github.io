@@ -83,7 +83,7 @@ export default class Menu extends React.Component {
   logoStyle = { width: "150px" };
   render() {
     return (
-      <Navbar bg="dark" variant="dark" id={this.props.id}>
+      <Navbar bg="light" variant="light" id={this.props.id}>
         {/* left side navbar */}
         <LinkContainer to="/">
           <Navbar.Brand>
