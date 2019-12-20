@@ -291,6 +291,7 @@ class App extends React.Component {
         <>
 
 <NavBar id="landingMenuSticky" {...this.props}
+userObj={this.state.userLoggedIn}
           logout={this.logout}
           setUser={this.setUser}
           fetchData={this.fetchData}

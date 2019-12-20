@@ -66,14 +66,14 @@ export default class Signup extends Component {
   render() {
     return (
       <>
-        <Menu
+        {/* <Menu
           id="landingMenuSticky"
           {...this.props}
           logOut={this.props.logOut}
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
           setFlashMessage={this.props.setFlashMessage}
-        />
+        /> */}
         <div className="sign-up-page" style={this.backgroundImage}>
           <div className="sign-up-overlay"></div>
         </div>

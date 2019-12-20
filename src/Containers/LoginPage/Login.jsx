@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "react-bootstrap";
+import "./Login.css"
 
 // Custom Components
 import BackgroundWithOverlay from "../../Components/BackgroundWithOverlay/BackgroundWithOverlay";
@@ -16,25 +17,27 @@ export default class Login extends Component {
     this.checkIfUser();
     return (
       <>
-        <Menu
+        {/* <Menu
           id="landingMenuSticky"
           {...this.props}
           logOut={this.props.logOut}
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
           setFlashMessage={this.props.setFlashMessage}
-        />
+        /> */}
         
-          <BackgroundWithOverlay
+          {/* <BackgroundWithOverlay
             imgUrl="books-business-computer-connection-459654.jpg"
             alpha=".2"
-          />
+          /> */}
 
-          <Container className="sign-up-container">
+          <div className="login-back-img">
+
+          <Container className="login-form" style={{paddingTop:"200px"}}>
             <h1>Login</h1>
             <LoginForm {...this.props} formType="form" />
           </Container>
-       
+          </div>
       </>
     );
   }

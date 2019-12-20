@@ -87,12 +87,12 @@ export default class Account extends Component {
     // if (this.props.taskDataIsReady) {
     return (
       <>
-        <Menu
+        {/* <Menu
           id="landingMenuSticky"
           {...this.props}
           logout={this.props.logout}
           setUser={this.props.setUser}
-        />
+        /> */}
         <BackgroundWithOverlay
           imgUrl="light-sun-cloud-japan-45848.jpg"
           alpha=".1"

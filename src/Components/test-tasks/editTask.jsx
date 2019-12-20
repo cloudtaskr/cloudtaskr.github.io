@@ -147,13 +147,13 @@ class EditTask extends Component {
   render() {
     return (
       <div>
-        <Menu
+        {/* <Menu
           id="landingMenuSticky"
           {...this.props}
           logout={this.props.logout}
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
-        />
+        /> */}
         <Container className="edit-task">
         <Row>
           
