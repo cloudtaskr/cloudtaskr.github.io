@@ -205,6 +205,7 @@ class App extends React.Component {
             `${res.data.username} successfully logged in`,
             true
           );
+          this.setFeedbackMessage(`${res.data.username} successfully logged in`, true);
           setTimeout(() => {
             this.setState({ apiIsAwake: true });
           }, 4000);
@@ -235,7 +236,7 @@ class App extends React.Component {
           filterTaskList: res.data,
           taskDataIsReady: true
         });
-        this.setFeedbackMessage(`User's data was successfully fetched`, true);
+        // this.setFeedbackMessage(`User's data was successfully fetched`, true);
       })
       .catch(err => {
         this.setFeedbackMessage(
