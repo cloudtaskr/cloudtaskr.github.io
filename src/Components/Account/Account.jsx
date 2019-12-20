@@ -5,7 +5,8 @@ import baseURL from "../../services/base";
 // Custom componenets
 import Menu from "../Menu/Menu";
 import Loading from "../Loading/Loading";
-
+import Welcome from "../Messages/Welcome";
+import BackgroundWithOverlay from "../BackgroundWithOverlay/BackgroundWithOverlay";
 // Styling
 import "./Account.css";
 import { Form, FormControl, Button } from "react-bootstrap";
@@ -92,11 +93,12 @@ export default class Account extends Component {
           logout={this.props.logout}
           setUser={this.props.setUser}
         />
-        <div className="account-page" style={pageBackground}>
-          <div className="account-overlay"></div>
-        </div>
+        <BackgroundWithOverlay
+          imgUrl="light-sun-cloud-japan-45848.jpg"
+          alpha=".1"
+        />
         <Container className="account-container">
-          <h1>Welcome {this.props.userObj && this.props.userObj.firstName}</h1>
+          <Welcome userObj={this.props.userObj} />
           <section>
             <Form onSubmit={this.handleUsernameUpdate}>
               <Form.Group controlId="username">
