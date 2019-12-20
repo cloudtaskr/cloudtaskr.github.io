@@ -31,7 +31,8 @@ class EditTask extends Component {
         lat: "",
         lng: ""
       },
-      active: ""
+      status: "",
+      duration: ""
     };
   }
 
@@ -54,11 +55,13 @@ class EditTask extends Component {
     const title = this.state.title;
     const description = this.state.description;
     const zone = this.state.zone;
+    const status = this.state.status
+    const duration = this.state.duration
     console.log(zone);
     axios
       .post(
         `${baseURL}/api/task/edit/${this.props.match.params.id}`,
-        { title, description, zone },
+        { title, description, zone, status, duration },
         { withCredentials: true }
       )
       .then(res => {
@@ -165,6 +168,23 @@ class EditTask extends Component {
                   ? this.state.zone.name
                   : this.state.active
               }
+            />
+            <hr />
+            <FormLabel>Duration:</FormLabel>
+            <FormControl
+              type="number"
+              name="duration"
+              value={this.state.duration}
+              onChange={e => this.handleChange(e)}
+            />
+            Minutes
+            <hr />
+            <FormLabel>Status:</FormLabel>
+            <FormControl
+              type="text"
+              name="status"
+              value={this.state.status}
+              onChange={e => this.handleChange(e)}
             />
             <hr />
             <FormGroup>

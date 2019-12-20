@@ -17,6 +17,7 @@ import TaskList from "./Components/test-tasks/taskList";
 import AddTask from "./Components/test-tasks/addTask";
 import EditTask from "./Components/test-tasks/editTask";
 import DeleteTask from "./Components/test-tasks/deleteTask";
+import CompleteTask from "./Components/test-tasks/completeTask";
 import Loading from "./Components/Loading/Loading";
 
 // Styling
@@ -309,6 +310,8 @@ class App extends React.Component {
                   searchTasksInput={this.searchTaskInput}
                   setFlashMessage={this.setFeedbackMessage}
                   fetchData={this.fetchData}
+                  userLocation={this.state.userLocation}
+                  distanceFunction={this.distanceFunction}
                 />
               )}
             />
@@ -352,10 +355,6 @@ class App extends React.Component {
                 <EditTask
                   {...props}
                   userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  filterTaskList={this.state.filterTaskList}
-                  searchTasksInput={this.searchTaskInput}
                   fetchData={this.fetchData}
                 />
               )}
@@ -367,10 +366,17 @@ class App extends React.Component {
                 <DeleteTask
                   {...props}
                   userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  filterTaskList={this.state.filterTaskList}
-                  searchTasksInput={this.searchTaskInput}
+                  fetchData={this.fetchData}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/task/complete/:id"
+              render={props => (
+                <CompleteTask
+                  {...props}
+                  userObj={this.state.userLoggedIn}
                   fetchData={this.fetchData}
                 />
               )}

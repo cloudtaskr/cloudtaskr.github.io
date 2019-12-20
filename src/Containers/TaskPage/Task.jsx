@@ -13,7 +13,7 @@ import {
 // Project Components
 import Menu from "../../Components/Menu/Menu";
 // import TaskList from "../../Containers/TaskPage/TaskList";
-import TaskList from "../../Components/test-tasks/taskList"
+import TaskList from "../../Components/test-tasks/taskList";
 // import AddTaskModal from "../../Components/test-tasks/addTaskModal"
 
 // Styling
@@ -72,58 +72,58 @@ export default class Task extends Component {
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
         />
-        {this.props.userObj ?
-        (<div id="task-page">
-        <aside id="task-sidebar">
-          <Container>
-            <h2 className="sidebar-header">Sections</h2>
-            <ul className="fa-ul">
-              <li>
-                <h4
-                  name="task"
-                  className="sidebar-item"
-                  onClick={this.checkForTasks}
-                >
-                  <FontAwesomeIcon icon={faCloud} listItem />
-                  Tasks
-                </h4>
-              </li>
-              <li>
-                <h4
-                  name="inbox"
-                  className="sidebar-item"
-                  onClick={this.checkForTasks}
-                >
-                  <FontAwesomeIcon icon={faInbox} listItem />
-                  Inbox
-                </h4>
-              </li>
-            </ul>
+        {this.props.userObj ? (
+          <div id="task-page">
+            <aside id="task-sidebar">
+              <Container>
+                <h2 className="sidebar-header">Sections</h2>
+                <ul className="fa-ul">
+                  <li>
+                    <h4
+                      name="task"
+                      className="sidebar-item"
+                      onClick={this.checkForTasks}
+                    >
+                      <FontAwesomeIcon icon={faCloud} listItem />
+                      Tasks
+                    </h4>
+                  </li>
+                  <li>
+                    <h4
+                      name="inbox"
+                      className="sidebar-item"
+                      onClick={this.checkForTasks}
+                    >
+                      <FontAwesomeIcon icon={faInbox} listItem />
+                      Inbox
+                    </h4>
+                  </li>
+                </ul>
 
-            <h3 className="sidebar-header">Zones</h3>
+                <h3 className="sidebar-header">Zones</h3>
 
-            <ul className="fa-ul">
-              <li>
-                <h4
-                  name="home"
-                  className="sidebar-item"
-                  onClick={this.checkForTasks}
-                >
-                  <FontAwesomeIcon icon={faHome} listItem />
-                  Home
-                </h4>
-              </li>
-              <li>
-                <h4
-                  name="work"
-                  className="sidebar-item"
-                  onClick={this.checkForTasks}
-                >
-                  <FontAwesomeIcon icon={faBriefcase} listItem />
-                  Work
-                </h4>
-              </li>
-            </ul>
+                <ul className="fa-ul">
+                  <li>
+                    <h4
+                      name="home"
+                      className="sidebar-item"
+                      onClick={this.checkForTasks}
+                    >
+                      <FontAwesomeIcon icon={faHome} listItem />
+                      Home
+                    </h4>
+                  </li>
+                  <li>
+                    <h4
+                      name="work"
+                      className="sidebar-item"
+                      onClick={this.checkForTasks}
+                    >
+                      <FontAwesomeIcon icon={faBriefcase} listItem />
+                      Work
+                    </h4>
+                  </li>
+                </ul>
 
             <h3 className="sidebar-header">Tags</h3>
             <Button id="add-task">
@@ -139,6 +139,8 @@ export default class Task extends Component {
             viewableTasks={this.state.displayedTasks}
             // viewableTasks={this.props.filterTaskList}
             fetchData={this.props.fetchData}
+            userLocation={this.props.userLocation}
+                distanceFunction={this.props.distanceFunction}
           />          
         </section>
 

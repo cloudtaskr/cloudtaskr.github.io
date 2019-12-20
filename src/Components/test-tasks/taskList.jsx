@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEdit,
+  faCheck,
   faTrash,
   faEllipsisV
 } from "@fortawesome/free-solid-svg-icons";
@@ -62,7 +62,7 @@ export default class TaskList extends Component {
             <h6>{task.description}</h6>
           </Col>
           <Col>
-          {/* {Math.floor(
+          {Math.floor(
                     this.props.distanceFunction(
                       this.props.userLocation.latitude,
                       this.props.userLocation.longitude,
@@ -70,18 +70,18 @@ export default class TaskList extends Component {
                       task.zone.lng,
                       "N"
                     )
-                  )}{" "} */}
+                  )}{" "}
                   miles away
           </Col>
           <Col>
-            {/* <Link to={"/task/edit/" + task._id}> */}
+            <Link to={"/task/edit/" + task._id}>
             <Button style={{ margin: "5px" }}>
               <FontAwesomeIcon icon={faEllipsisV} />
             </Button>
-            {/* </Link> */}
-            <Link to={"/task/edit/" + task._id} variant="warning">
+            </Link>
+            <Link to={"/task/complete/" + task._id} variant="success">
               <Button style={{ margin: "5px" }}>
-                <FontAwesomeIcon icon={faEdit} />
+                <FontAwesomeIcon icon={faCheck} />
               </Button>
             </Link>
             <Link to={"/task/delete/" + task._id}>
@@ -154,19 +154,13 @@ export default class TaskList extends Component {
             </Container>
           </div>
         ) : (
-          <div>
-            <Menu
-              id="landingMenuSticky"
-              {...this.props}
-              logout={this.props.logout}
-              setUser={this.props.setUser}
-              fetchData={this.props.fetchData}
-            />
+          <Container>
+            
             <h1>Not authorized, sign up to make your first task</h1>
             <LinkContainer to="/signup">
               <Button>Sign Up</Button>
             </LinkContainer>
-          </div>
+          </Container>
         )}
       </div>
     );
