@@ -48,19 +48,19 @@ export default class NavBar extends Component {
 
         <div className="nav-right">
         <Link to="/" className="nav-heading nav-heading2">Home</Link>
-        <Link to="/" className="nav-heading nav-heading2">About</Link>
+        <Link to="/about" className="nav-heading nav-heading2">About</Link>
 
         {this.props.userObj ? 
         (<>
           <Link to="/task" className="nav-heading nav-heading2">Task</Link>
           <Link to="/" className="nav-heading">
-            <Button variant="primary btn-prp">Log out</Button>
+            <Button variant="primary btn-prp" onClick={this.props.logout}>Log out</Button>
           </Link>
           </>) : (<>
-          <Link to="/" className="nav-heading">
+          <Link to="/login" className="nav-heading">
             <Button variant="primary btn-prp">Login</Button>
           </Link>
-          <Link to="/" className="nav-heading">
+          <Link to="/signup" className="nav-heading">
             <Button variant="primary btn-prp">Sign up</Button>
           </Link>
           </>)}
