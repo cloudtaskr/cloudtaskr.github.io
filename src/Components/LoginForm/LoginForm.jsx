@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Form } from "react-bootstrap";
 // import Axios from "axios";
-
+import { Link } from "react-router-dom";
 // Custom Components
 // import baseURL from "../../services/base";
 import actions from "../../services/index";
@@ -92,7 +92,7 @@ export default class LoginForm extends Component {
       borderRadius: "20px",
   backgroundColor: "#2F0152",
   borderColor: "#2F0152",
-  width: "150px"
+  width: "100px"
     }
     return (
       <>
@@ -135,6 +135,7 @@ export default class LoginForm extends Component {
             >
               Login
             </Button>
+            <Link to="/signup">Don't have an account? Sign up</Link>
           </Form.Group>
         </Form>
       </>

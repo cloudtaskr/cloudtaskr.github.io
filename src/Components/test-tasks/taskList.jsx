@@ -162,7 +162,7 @@ export default class TaskList extends Component {
           Set the number of minutes you're available and we'll recommend tasks for you to complete.
         </p>
         <hr />
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-center align-content-center">
           <Button onClick={()=>{this.props.filterDuration(5)}} variant="outline-success">
             5 mins
           </Button>
@@ -172,16 +172,13 @@ export default class TaskList extends Component {
           <Button onClick={()=>{this.props.filterDuration(30)}} variant="outline-success">
             30 mins
           </Button>
-          <Button onClick={()=>{this.props.filterDuration(60)}} variant="outline-success">
-            60 mins
-          </Button>
         </div>
       </Alert>
 
       {/* {!this.show && <Button onClick={() => this.setState({showDurationAlert: true})}>Show Alert</Button>} */}
         {this.props.userObj ? (
           <div>
-            <Container>
+            <Container className="task-list-page">
               {/* {this.props.userObj.firstName ? (
                 <h2>Welcome {this.props.userObj.firstName}</h2>
               ) : (

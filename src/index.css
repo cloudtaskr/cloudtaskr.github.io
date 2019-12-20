@@ -18,6 +18,10 @@ code {
   z-index: 5;
 }
 
+.task-list-page{
+  padding-top: 120px;
+}
+
 .add-task-button {
   position:fixed;
 	bottom:40px;

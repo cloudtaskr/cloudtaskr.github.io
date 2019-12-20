@@ -34,7 +34,7 @@ export default class Login extends Component {
           <div className="login-back-img">
 
           <Container className="login-form" style={{paddingTop:"200px"}}>
-            <h1>Login</h1>
+            <h1>Welcome back!</h1>
             <LoginForm {...this.props} formType="form" />
           </Container>
           </div>

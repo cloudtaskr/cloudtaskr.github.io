@@ -64,6 +64,13 @@ export default class Signup extends Component {
   };
 
   render() {
+    let styles = {
+      borderRadius: "20px",
+  backgroundColor: "#2F0152",
+  borderColor: "#2F0152",
+  width: "100px"
+    }
+
     return (
       <>
         {/* <Menu
@@ -74,15 +81,14 @@ export default class Signup extends Component {
           fetchData={this.props.fetchData}
           setFlashMessage={this.props.setFlashMessage}
         /> */}
-        <div className="sign-up-page" style={this.backgroundImage}>
-          <div className="sign-up-overlay"></div>
-        </div>
-        <Container className="sign-up-container">
+        <div className="signup-back-img" >
+        
+        <Container className="login-form" style={{paddingTop:"200px"}}>
           <h1>Join today!</h1>
           <Form className="sign-up-form" onSubmit={this.handleSignUpForm}>
             <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control
+              <Form.Control style={{width:"500px"}}
                 name="email"
                 type="email"
                 placeholder="Enter email"
@@ -93,7 +99,7 @@ export default class Signup extends Component {
 
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control
+              <Form.Control style={{width:"500px"}}
                 name="password"
                 type="password"
                 placeholder="Password"
@@ -102,10 +108,11 @@ export default class Signup extends Component {
               />
             </Form.Group>
             <div>
-              <Button type="submit">SignUp</Button> <Link to="/login">Already have an account? Login</Link>
+              <Button style={styles} type="submit">Sign up</Button> <Link to="/login">Already have an account? Login</Link>
             </div>
           </Form>
         </Container>
+        </div>
       </>
     );
   }

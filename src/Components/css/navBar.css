@@ -176,7 +176,23 @@
 
 .btn-prp {
   border-radius: 20px !important;
-  color:  #2F0152;
   background-color: #2F0152 !important;
   border-color: #2F0152 !important;
+}
+
+.profile-css {
+  background-color: #2F0152;
+  border-radius: 50%;
+  color: white;
+  padding-top: 5px;
+  width: 48px;
+}
+
+.profile-css:hover {
+  background-color: white;
+  color: #2F0152 !important;
+  border: 1px solid #2F0152;
+  width: 48px;
+  border-radius: 50%;
+  padding-top: 5px;
 }
