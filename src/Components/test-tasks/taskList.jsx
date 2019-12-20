@@ -200,8 +200,6 @@ export default class TaskList extends Component {
               {/* <button onClick={this.displayAllTasks}>Filter</button> */}
               <Container>
               {/* <Row><Col xs={2}>Complete</Col><Col xs={6}>Task</Col></Row> */}
-                {this.props && this.displayAllTasks()}
-              </Container>
               {this.state.showAddTaskMenu ? (
                 <Row>
                   <Col>
@@ -216,6 +214,9 @@ export default class TaskList extends Component {
               ) : (
                 ""
               )}
+                {this.props && this.displayAllTasks()}
+              </Container>
+              
             </Container>
           </div>
         ) : (
