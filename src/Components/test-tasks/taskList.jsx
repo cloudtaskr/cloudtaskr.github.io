@@ -155,7 +155,7 @@ export default class TaskList extends Component {
                     onClick={this.addTaskMenu}
                     className="add-task-button"
                   >
-                    +
+                    Add a task
                   </button>
                 </Col>
               </Row>
