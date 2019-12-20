@@ -19,3 +19,33 @@ code {
   width: 200px !important;
   z-index: 5;
 }
+
+.add-task-button {
+  position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color: rgb(33, 113, 145);
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 5;
+
+  /* padding: 20px; */
+}
+
+.edit-task {
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 30px;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form{
+  margin: 10px;
+  justify-content: center;
+}

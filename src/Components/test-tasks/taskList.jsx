@@ -119,6 +119,7 @@ export default class TaskList extends Component {
 
   addTaskMenu = () => {
     // console.log("Add Task Menu");
+    window.scrollTo(0, 0);
     this.setState({ showAddTaskMenu: !this.state.showAddTaskMenu });
   };
 
@@ -150,19 +151,27 @@ export default class TaskList extends Component {
 
               <Row style={{ margin: "5px" }}>
                 <Col sm={6}>
-                  <Button onClick={this.addTaskMenu}>Add Task</Button>
+                  <button
+                    onClick={this.addTaskMenu}
+                    className="add-task-button"
+                  >
+                    +
+                  </button>
                 </Col>
               </Row>
-
-              {this.state.showAddTaskMenu ? (
-                <AddTask
-                  fetchData={this.props.fetchData}
-                  showAddTaskMenu={this.addTaskMenu}
-                  filterList={this.props.filterList}
-                />
-              ) : (
-                ""
-              )}
+                  {this.state.showAddTaskMenu ? (
+                    
+              <Row>
+                <Col><AddTask
+                      fetchData={this.props.fetchData}
+                      showAddTaskMenu={this.addTaskMenu}
+                      filterList={this.props.filterList}
+                    />
+                  <hr />
+                </Col>
+              </Row>) : (
+                    ""
+                  )}
               {/* <button onClick={this.displayAllTasks}>Filter</button> */}
               <div id="main-task-list">
                 {this.props && this.displayAllTasks()}

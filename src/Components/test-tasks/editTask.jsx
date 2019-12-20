@@ -150,10 +150,10 @@ class EditTask extends Component {
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
         />
-        <Container>
+        <Container className="edit-task">
         <Row>
           
-          <Form onSubmit={this.handleUpdateTask}>
+          <Form onSubmit={this.handleUpdateTask} className="edit-form">
             <FormLabel>
               {" "}
               <FontAwesomeIcon icon={faList} /> Title:
