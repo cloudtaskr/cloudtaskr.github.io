@@ -34,7 +34,11 @@ class App extends React.Component {
       taskDataIsReady: false,
       errorMsg: null,
       successMsg: null,
-      apiIsAwake: false
+      apiIsAwake: false, 
+      userLocation: {
+        latitude: 0,
+        longitude: 0
+      },
     };
   }
 
@@ -45,6 +49,54 @@ class App extends React.Component {
   componentDidMount() {
     console.log("Mount App");
     this.getUser();
+    this.getUserLocation();
+  }
+
+
+  getUserLocation = () => {
+    let geo_success = position => {
+      this.setState({
+        userLocation: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        }
+      });
+    };
+
+    let geo_error = () => {
+      console.log("Sorry, no position available.");
+    };
+
+    let geo_options = {
+      enableHighAccuracy: true,
+      maximumAge: 30000,
+      timeout: 7000
+    };
+
+    navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+  }
+
+  // calculate distance of user and task zone lat/lng
+  distanceFunction = (lat1, lon1, lat2, lon2, unit)=>{
+    if ((lat1 === lat2) && (lon1 === lon2)) {
+      return 0;
+    }
+    else {
+      var radlat1 = Math.PI * lat1/180;
+      var radlat2 = Math.PI * lat2/180;
+      var theta = lon1-lon2;
+      var radtheta = Math.PI * theta/180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515;
+      if (unit==="K") { dist = dist * 1.609344 }
+      if (unit==="N") { dist = dist * 0.8684 }
+      return dist;
+    }
   }
 
   /**
@@ -273,6 +325,8 @@ class App extends React.Component {
                   searchTasksInput={this.searchTaskInput}
                   setFlashMessage={this.setFeedbackMessage}
                   fetchData={this.fetchData}
+                  userLocation={this.state.userLocation}
+                  distanceFunction={this.distanceFunction}
                 />
               )}
             />

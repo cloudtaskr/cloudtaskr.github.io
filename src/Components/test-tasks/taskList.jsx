@@ -40,10 +40,12 @@ export default class TaskList extends Component {
     //   this.props.history.push("/task");
     // })
   };
+  
   displayAllTasks = () => {
     // console.log(this.props.filterTaskList)
     return this.props.filterTaskList.map(task => {
       return (
+        // console.log(task.lat)
         <Row
           key={task._id}
           name="task"
@@ -58,6 +60,18 @@ export default class TaskList extends Component {
           </Col>
           <Col>
             <h6>{task.description}</h6>
+          </Col>
+          <Col>
+          {Math.floor(
+                    this.props.distanceFunction(
+                      this.props.userLocation.latitude,
+                      this.props.userLocation.longitude,
+                      task.zone.lat,
+                      task.zone.lng,
+                      "N"
+                    )
+                  )}{" "}
+                  miles away
           </Col>
           <Col>
             {/* <Link to={"/task/edit/" + task._id}> */}
