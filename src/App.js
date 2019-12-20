@@ -45,6 +45,7 @@ class App extends React.Component {
         latitude: 0,
         longitude: 0
       }
+      , showDurationAlert: true
     };
   }
 
@@ -114,6 +115,19 @@ class App extends React.Component {
     }
   };
 
+  filterDuration = (time) =>{
+  
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.duration < time)
+      
+
+      this.setState({
+        filterTaskList: filteredTasks,
+        showDurationAlert: false
+      });
+    
+  }
+
   /**
    * make call to server to get the user data and save to set state
    */
@@ -171,9 +185,8 @@ class App extends React.Component {
   filterList = tag => {
     if (tag === "complete") {
       let tasksListCopy = [...this.state.listOfTasks];
-      let filteredTasks = tasksListCopy.filter(eachTask => {
-        return eachTask.status.toLowerCase().includes("complete");
-      });
+      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.status==="complete")
+      
 
       this.setState({
         filterTaskList: filteredTasks
@@ -387,6 +400,8 @@ class App extends React.Component {
                   userLocation={this.state.userLocation}
                   distanceFunction={this.distanceFunction}
                   filterList={this.filterList}
+                  filterDuration={this.filterDuration}
+                  showDurationAlert={this.state.showDurationAlert}
                 />
               )}
             />

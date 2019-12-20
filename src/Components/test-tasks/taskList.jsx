@@ -14,13 +14,15 @@ import AddTask from "./addTask";
 
 import axios from "axios";
 import baseURL from "../../services/base";
+import { Alert } from "react-bootstrap";
 // import AddTask from "./addTask";
 export default class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showAddTaskMenu: false,
-      title: ""
+      title: "",
+      // showDurationAlert: this.props.showDurationAlert
     };
   }
 
@@ -64,6 +66,7 @@ export default class TaskList extends Component {
     // console.log(this.props.filterTaskList)
 
     return this.props.filterTaskList.map(task => {
+      // if(task.status==="active"){
       return (
         // console.log(task.lat)
         <Row
@@ -74,8 +77,29 @@ export default class TaskList extends Component {
           //   padding: "5px",
           //   justifyContent: "space-between"
           // }}
+          className="each-task"
         >
-          <Col>
+          <Col xs={2}>
+          {task.status==="complete" ? (<Button
+              style={{ margin: "5px" }}
+              onClick={() => {
+                this.completeTask(task._id);
+              }}
+              variant="warning"
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </Button>):(<Button
+              style={{ margin: "5px" }}
+              onClick={() => {
+                this.completeTask(task._id);
+              }}
+              variant="outline-warning"
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </Button>)}
+            
+          </Col>
+          <Col xs={6} className="task-title" >
             <h5>{task.title}</h5>
           </Col>
           {/* <Col>
@@ -90,22 +114,13 @@ export default class TaskList extends Component {
                   )}{" "}
                   miles away
           </Col> */}
-          <Col>
+          <Col xs={4}>
             <Link to={"/task/edit/" + task._id}>
               <Button style={{ margin: "5px" }}>
                 <FontAwesomeIcon icon={faEllipsisV} />
               </Button>
             </Link>
-            {/* <Link to={"/task/complete/" + task._id} variant="success"> */}
-            <Button
-              style={{ margin: "5px" }}
-              onClick={() => {
-                this.completeTask(task._id);
-              }}
-            >
-              <FontAwesomeIcon icon={faCheck} />
-            </Button>
-            {/* </Link> */}
+            
             <Link to={"/task/delete/" + task._id}>
               <Button style={{ margin: "5px" }} variant="danger">
                 <FontAwesomeIcon icon={faTrash} />
@@ -113,13 +128,14 @@ export default class TaskList extends Component {
             </Link>
           </Col>
         </Row>
-      );
+        );
+      // }
     });
   };
 
   addTaskMenu = () => {
     // console.log("Add Task Menu");
-    window.scrollTo(0, 0);
+    window.scrollTo(400, 0);
     this.setState({ showAddTaskMenu: !this.state.showAddTaskMenu });
   };
 
@@ -140,14 +156,37 @@ export default class TaskList extends Component {
 
     return (
       <div>
+      <Alert show={this.props.showDurationAlert} variant="success">
+        <Alert.Heading>How's much free time do you have?!</Alert.Heading>
+        <p>
+          Set the number of minutes you're available and we'll recommend tasks for you to complete.
+        </p>
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button onClick={()=>{this.props.filterDuration(5)}} variant="outline-success">
+            5 mins
+          </Button>
+          <Button onClick={()=>{this.props.filterDuration(15)}} variant="outline-success">
+            10 mins
+          </Button>
+          <Button onClick={()=>{this.props.filterDuration(30)}} variant="outline-success">
+            30 mins
+          </Button>
+          <Button onClick={()=>{this.props.filterDuration(60)}} variant="outline-success">
+            60 mins
+          </Button>
+        </div>
+      </Alert>
+
+      {/* {!this.show && <Button onClick={() => this.setState({showDurationAlert: true})}>Show Alert</Button>} */}
         {this.props.userObj ? (
           <div>
             <Container>
-              {this.props.userObj.firstName ? (
+              {/* {this.props.userObj.firstName ? (
                 <h2>Welcome {this.props.userObj.firstName}</h2>
               ) : (
                 <h2>Welcome {this.props.userObj.username}</h2>
-              )}
+              )} */}
 
               <Row style={{ margin: "5px" }}>
                 <Col sm={6}>
@@ -159,28 +198,30 @@ export default class TaskList extends Component {
                   </button>
                 </Col>
               </Row>
-                  {this.state.showAddTaskMenu ? (
-                    
-              <Row>
-                <Col><AddTask
+
+              {/* <button onClick={this.displayAllTasks}>Filter</button> */}
+              <Container>
+              {/* <Row><Col xs={2}>Complete</Col><Col xs={6}>Task</Col></Row> */}
+                {this.props && this.displayAllTasks()}
+              </Container>
+              {this.state.showAddTaskMenu ? (
+                <Row>
+                  <Col>
+                    <AddTask
                       fetchData={this.props.fetchData}
                       showAddTaskMenu={this.addTaskMenu}
                       filterList={this.props.filterList}
                     />
-                  <hr />
-                </Col>
-              </Row>) : (
-                    ""
-                  )}
-              {/* <button onClick={this.displayAllTasks}>Filter</button> */}
-              <div id="main-task-list">
-                {this.props && this.displayAllTasks()}
-              </div>
+                    <hr />
+                  </Col>
+                </Row>
+              ) : (
+                ""
+              )}
             </Container>
           </div>
         ) : (
           <Container>
-            
             <h1>Not authorized, sign up to make your first task</h1>
             <LinkContainer to="/signup">
               <Button>Sign Up</Button>
