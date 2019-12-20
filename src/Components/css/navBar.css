@@ -2,7 +2,7 @@
   /* params: border width, style, color */
   /* border: 2px solid red; */
   background-color: rgb(0, 0, 0);
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.700);
   /* remove container-fluid extra right padding */
   /* padding: 0; */
   display: flex;
@@ -11,7 +11,7 @@
    /* center the elements based on vertical axis */
   align-items: center;
   height: 4rem;
-  padding: 3rem 36px !important;
+  padding: 3rem 72px !important;
   position: fixed;
   /* opacity: 10%; */
   z-index: 100;
