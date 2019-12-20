@@ -40,8 +40,8 @@ export default class addTask extends Component {
         )
         .then(() => {
           // this.props.getData();
-          // this.props.fetchData();
-          // this.props.filterList("active")
+          this.props.fetchData();
+          this.props.filterList("active");
           this.props.showAddTaskMenu();
           this.setState({ title: "", description: "" });
           // this.props.history.push("/tasks");

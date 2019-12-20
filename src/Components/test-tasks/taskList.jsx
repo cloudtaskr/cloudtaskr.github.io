@@ -155,7 +155,7 @@ export default class TaskList extends Component {
                     onClick={this.addTaskMenu}
                     className="add-task-button"
                   >
-                    +
+                    Add a task
                   </button>
                 </Col>
               </Row>
@@ -180,6 +180,7 @@ export default class TaskList extends Component {
           </div>
         ) : (
           <Container>
+            
             <h1>Not authorized, sign up to make your first task</h1>
             <LinkContainer to="/signup">
               <Button>Sign Up</Button>
