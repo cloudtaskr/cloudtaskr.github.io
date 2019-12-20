@@ -85,7 +85,9 @@ export default class Menu extends React.Component {
       <Navbar bg="dark" variant="dark" id={this.props.id}>
         {/* left side navbar */}
         <LinkContainer to="/">
-          <Navbar.Brand>cloudTaskr</Navbar.Brand>
+          <Navbar.Brand>
+            <img src="/images/logo.png" style="height: 100" />
+          </Navbar.Brand>
         </LinkContainer>
         <Nav className="mr-auto">
           {/* <LinkContainer to="/">
@@ -97,8 +99,8 @@ export default class Menu extends React.Component {
             </LinkContainer>
           ) : (
             <LinkContainer to="/">
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
           )}
         </Nav>
 
