@@ -9,7 +9,11 @@ export default class Style extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar id="landingMenuSticky" {...this.props}
+          logout={this.props.logout}
+          setUser={this.props.setUser}
+          fetchData={this.props.fetchData}
+          setFlashMessage={this.props.setFlashMessage}/>
 
         
         <div className="landing-home" >
