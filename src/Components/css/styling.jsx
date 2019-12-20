@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./styling.css";
 
-import NavBar from "./navBar";
+// import NavBar from "./navBar";
+
 
 import { Jumbotron, Button } from "react-bootstrap";
 
