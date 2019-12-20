@@ -93,11 +93,10 @@ class App extends React.Component {
       )
     )
     
-    if(workDistance <= 5 ){
-      if(this.state.countWorkAlert===0){
+    if(workDistance <= 5 || this.state.countWorkAlert===0){
       this.setState({showWorkAlert: true, countWorkAlert: 1})
     }
-  }
+  
   }
 
   getUserLocation = () => {
@@ -183,6 +182,7 @@ class App extends React.Component {
       }
       else {
         this.setState({
+          filterTaskList: this.state.listOfTasks,
           showHomeAlert: false,
           countHomeAlert: 1
         });
@@ -204,6 +204,7 @@ class App extends React.Component {
       }
       else {
         this.setState({
+          filterTaskList: this.state.listOfTasks,
           showWorkAlert: false,
           countWorkAlert: 1
         });

@@ -60,7 +60,7 @@ export default class SmartTasks extends Component {
           </Card.Body>
         </Card>
         </div>
-      <div className={this.props.showHomeAlert ? "show" : "hide"}>
+      <div className={!this.props.showHomeAlert ? "show" : "hide"}>
         <Card style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>You're near Home</Card.Title>
@@ -103,7 +103,7 @@ export default class SmartTasks extends Component {
         </div>
       </Alert> */}
       <div 
-      className={this.props.showWorkAlert ? "show" : "hide"}
+      className={!this.props.showWorkAlert ? "" : "hide"}
       >
           
       <Card style={{ width: "18rem" }} >
