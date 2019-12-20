@@ -9,36 +9,11 @@ import { Form } from "react-bootstrap";
 import { FormGroup } from "react-bootstrap";
 
 import baseURL from "../../services/base"
+import EditTask from "./editTask";
 
 export default class AddTaskModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      description: ""
-    };
-  }
-  handleFormSubmit = event => {
-    event.preventDefault();
-    const title = this.state.title;
-    const description = this.state.description;
-    Axios.post(`${baseURL}/api/tasks`, { title, description} , {withCredentials: true})
-      .then(() => {
-        // this.props.getData();
-        this.setState({ title: "", description: "" });
-        
-      })
-      .catch(error => {
-        console.log({ title, description})
-        console.log(error);
-      })
-  };
+  
 
-  handleChange = event => {
-    // console.log(event, event.target, event.target.value);
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  };
   render() {
     return (
       <Modal
@@ -48,33 +23,13 @@ export default class AddTaskModal extends Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Add Task</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">Edit Task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* <h4>Centered Modal</h4> */}
           <Row>
             <Col>
-              <Form onSubmit={this.handleFormSubmit}>
-                <FormLabel>Title:</FormLabel>
-                <FormControl
-                  type="text"
-                  name="title"
-                  value={this.state.title}
-                  onChange={e => this.handleChange(e)}
-                />
-                <FormLabel>Description:</FormLabel>
-                <FormControl
-                  type="text"
-                  name="description"
-                  value={this.state.description}
-                  onChange={e => this.handleChange(e)}
-                />
-                <FormGroup>
-                <button className="btn btn-danger" onClick={this.props.onHide}>
-                  Create
-                </button>
-                </FormGroup>
-              </Form>
+             <EditTask />
             </Col>
           </Row>
         </Modal.Body>

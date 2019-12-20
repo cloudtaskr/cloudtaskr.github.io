@@ -36,7 +36,8 @@ export default class addTask extends Component {
       axios.post(`${baseURL}/api/tasks`,{ title, description },{ withCredentials: true })
         .then(() => {
           // this.props.getData();
-          this.props.fetchData();
+          // this.props.fetchData();
+      // this.props.filterList("active")
           this.props.showAddTaskMenu();
           this.setState({ title: "", description: "" });
           // this.props.history.push("/tasks");

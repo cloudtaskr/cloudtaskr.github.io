@@ -1,9 +1,10 @@
 #task-sidebar {
-  background-color: rgba(36, 39, 43, 1);
-  color: rgba(234, 255, 254, 1);
+  background-color:  rgba(234, 255, 254, 1);
+  color: black;
   min-height: calc(100vh - 55px);
   min-width: 30vw;
   position: relative;
+  padding-top: 10px;
 }
 
 #task-page {
@@ -15,15 +16,20 @@
   background-color: rgba(234, 255, 254, 1);
   width: 70vw;
 }
+.sidebar-group{
+  padding-left: 15px;
+}
+.search-input {
+  font-size: 16px;
+}
+
 
 .sidebar-header {
-  background-color: rgba(141, 153, 174, 1);
-  box-shadow: 2px 0px 8px grey;
-  text-shadow: 0px 0px 2px rgba(16, 79, 85, 1);
   color: rgba(36, 39, 43, 1);
   margin: 8px 0px;
-  border-radius: 2px;
-  text-align: center;
+  text-align: right;
+  text-transform: uppercase;
+  border-bottom: 1px solid black;
 }
 
 .sidebar-item:hover {
