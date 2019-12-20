@@ -88,15 +88,14 @@ export default class Menu extends React.Component {
           <Navbar.Brand>cloudTaskr</Navbar.Brand>
         </LinkContainer>
         <Nav className="mr-auto">
-          <LinkContainer to="/">
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
           {this.props.userObj ? (
             <LinkContainer to="/task">
               <Nav.Link>Task</Nav.Link>
             </LinkContainer>
           ) : (
-            <></>
+            <LinkContainer to="/">
+            <Nav.Link>Home</Nav.Link>
+          </LinkContainer>
           )}
         </Nav>
 
