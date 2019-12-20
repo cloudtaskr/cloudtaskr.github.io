@@ -33,7 +33,7 @@ export default class LogIn extends Component {
           <div className="login-overlay"></div>
         </div>
         <Container className="login-container">
-          <h1>Log In</h1>
+          <h1></h1>
           <Form className="login-form" onSubmit={this.handleFormSubmit}>
             <Form.Group controlId="email">
               <Form.Label>Email</Form.Label>
