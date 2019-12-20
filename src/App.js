@@ -119,7 +119,7 @@ class App extends React.Component {
   filterDuration = (time) =>{
   
       let tasksListCopy = [...this.state.listOfTasks];
-      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.duration < time)
+      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.duration <= time)
       
 
       this.setState({
