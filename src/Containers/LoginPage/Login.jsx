@@ -35,7 +35,9 @@ export default class Login extends Component {
 
           <Container className="login-form" style={{paddingTop:"200px"}}>
             <h1>Welcome back!</h1>
-            <LoginForm {...this.props} formType="form" />
+            <LoginForm {...this.props} 
+            setFlashMessage={this.props.setFlashMessage}
+            formType="form" />
           </Container>
           </div>
       </>

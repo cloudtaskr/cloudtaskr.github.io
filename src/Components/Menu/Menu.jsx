@@ -67,8 +67,8 @@ export default class Menu extends React.Component {
           });
           this.props.setUser(response.data);
           this.props.fetchData();
-          this.props.history.push("/task");
           this.props.setFlashMessage("Login successful", true);
+          this.props.history.push("/task");
         })
         .catch(err => {
           // this.props.setFlashMessage("Login failed", false)

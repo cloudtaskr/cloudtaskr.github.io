@@ -201,11 +201,11 @@ class App extends React.Component {
         if (res.data) {
           this.setUser(res.data);
           this.fetchData();
-          this.setFeedbackMessage(
-            `${res.data.username} successfully logged in`,
-            true
-          );
-          this.setFeedbackMessage(`${res.data.username} successfully logged in`, true);
+          // this.setFeedbackMessage(
+          //   `${res.data.username} successfully logged in`,
+          //   true
+          // );
+          // this.setFeedbackMessage(`${res.data.username} successfully logged in`, true);
           setTimeout(() => {
             this.setState({ apiIsAwake: true });
           }, 4000);
@@ -338,7 +338,7 @@ class App extends React.Component {
         errorMsg: null,
         successMsg: null
       });
-    }, 5500);
+    }, 3000);
   };
 
   /**
@@ -435,6 +435,7 @@ class App extends React.Component {
                   logout={this.logout}
                   setUser={this.setUser}
                   fetchData={this.fetchData}
+                  setFlashMessage={this.setFeedbackMessage}
                 />
               )}
             />

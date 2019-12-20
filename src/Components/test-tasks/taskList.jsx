@@ -178,6 +178,7 @@ export default class TaskList extends Component {
       {/* {!this.show && <Button onClick={() => this.setState({showDurationAlert: true})}>Show Alert</Button>} */}
         {this.props.userObj ? (
           <div>
+            
             <Container className="task-list-page">
               {/* {this.props.userObj.firstName ? (
                 <h2>Welcome {this.props.userObj.firstName}</h2>

@@ -48,6 +48,7 @@ export default class LoginForm extends Component {
           this.props.setUser(response.data);
           this.props.history.push("/task");
           this.props.fetchData();
+          this.props.setFlashMessage("Login successful", true);
         })
         .catch(err => {
           // console.log(err);
