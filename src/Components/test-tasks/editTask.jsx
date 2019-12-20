@@ -19,6 +19,8 @@ import axios from "axios";
 import baseURL from "../../services/base";
 import EditTaskZone from "./EditTaskZone.jsx";
 
+import Calendar from 'react-date-picker';
+
 class EditTask extends Component {
   constructor(props) {
     super(props);
