@@ -19,6 +19,7 @@ import TaskList from "../../Components/test-tasks/taskList";
 
 // Styling
 import "../../Components/Task/Task.css";
+import SmartTasks from "../../Components/test-tasks/SmartTasks";
 // import { LinkContainer } from "react-router-bootstrap";
 
 // testing calendar component
@@ -158,6 +159,19 @@ export default class Task extends Component {
                 userLocation={this.props.userLocation}
                 distanceFunction={this.props.distanceFunction}
               />
+            </section>
+
+            <section id="smart-section">
+              <SmartTasks  
+                  setFlashMessage={this.props.setFeedbackMessage}
+                  fetchData={this.props.fetchData}
+                  userLocation={this.props.userLocation}
+                  distanceFunction={this.props.distanceFunction}
+                  filterList={this.props.filterList}
+                  filterDuration={this.props.filterDuration}
+                  showDurationAlert={this.props.showDurationAlert}
+                  filterHomeTasks={this.props.filterHomeTasks}
+                  showHomeAlert={this.props.showHomeAlert} />
             </section>
           </div>
         ) : (

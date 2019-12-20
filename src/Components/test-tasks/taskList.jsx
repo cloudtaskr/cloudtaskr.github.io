@@ -56,8 +56,8 @@ export default class TaskList extends Component {
         console.log(res);
         // this.props.getData();
         // this.setState({ title: "", description: "" });
-        // this.props.fetchData();
-        this.props.filterList("active");
+        this.props.fetchData();
+        // this.props.filterList("active");
       })
       .catch(error => console.log(error));
   };
@@ -167,7 +167,7 @@ export default class TaskList extends Component {
             5 mins
           </Button>
           <Button onClick={()=>{this.props.filterDuration(15)}} variant="outline-success">
-            10 mins
+            15 mins
           </Button>
           <Button onClick={()=>{this.props.filterDuration(30)}} variant="outline-success">
             30 mins

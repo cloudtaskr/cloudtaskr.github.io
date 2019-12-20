@@ -46,7 +46,12 @@ class App extends React.Component {
         latitude: 0,
         longitude: 0
       },
-      showDurationAlert: true
+      showDurationAlert: true,
+      countDurationAlert: 0,
+      showHomeAlert: false,
+      countHomeAlert: 0,
+      showWorkAlert: false,
+      countWorkAlert: 0,
     };
   }
 
@@ -58,7 +63,41 @@ class App extends React.Component {
     console.log("Mount App");
     this.getUser();
     this.getUserLocation();
+    // this.checkUserDistance();
     //=> 'fe80::200:f8ff:fe21:67cf'
+  }
+
+  checkUserDistance = () => {
+   let homeDistance = Math.floor(
+      this.props.distanceFunction(
+        this.props.userLocation.latitude,
+        this.props.userLocation.longitude,
+        this.state.userObj.zones.home.lat,
+        this.state.userObj.zones.home.lng,
+        "N"
+      )
+    )
+    if(homeDistance <= 5 ){
+      if(this.state.countHomeAlert===0){
+      this.setState({showHomeAlert: true, countHomeAlert: 1})
+    }
+  }
+
+    let workDistance = Math.floor(
+      this.props.distanceFunction(
+        this.props.userLocation.latitude,
+        this.props.userLocation.longitude,
+        this.state.userObj.zones.work.lat,
+        this.state.userObj.zones.work.lng,
+        "N"
+      )
+    )
+    
+    if(workDistance <= 5 ){
+      if(this.state.countWorkAlert===0){
+      this.setState({showWorkAlert: true, countWorkAlert: 1})
+    }
+  }
   }
 
   getUserLocation = () => {
@@ -124,9 +163,33 @@ class App extends React.Component {
 
     this.setState({
       filterTaskList: filteredTasks,
-      showDurationAlert: false
+      showDurationAlert: false,
+      countDurationAlert: 1
     });
   };
+  filterHomeTasks = (arg) => {
+    if(arg==="yes"){
+
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(
+        eachTask => eachTask.zone.name === "home"
+        );
+        
+        this.setState({
+          filterTaskList: filteredTasks,
+          showHomeAlert: false,
+          countHomeAlert: 1
+        });
+      }
+      else {
+        this.setState({
+          showHomeAlert: false,
+          countHomeAlert: 1
+        });
+      }
+  };
+
+  
 
   /**
    * make call to server to get the user data and save to set state
@@ -195,9 +258,7 @@ class App extends React.Component {
     }
     if (tag === "active") {
       let tasksListCopy = [...this.state.listOfTasks];
-      let filteredTasks = tasksListCopy.filter(eachTask => {
-        return eachTask.status.toLowerCase().includes("active");
-      });
+      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.status==="active")
 
       this.setState({
         filterTaskList: filteredTasks
@@ -411,6 +472,8 @@ class App extends React.Component {
                   filterList={this.filterList}
                   filterDuration={this.filterDuration}
                   showDurationAlert={this.state.showDurationAlert}
+                  filterHomeTasks={this.filterHomeTasks}
+                  showHomeAlert={this.showHomeAlert}
                 />
               )}
             />
@@ -432,6 +495,7 @@ class App extends React.Component {
                 />
               )}
             />
+            
             <Route
               exact
               path="/task/add"

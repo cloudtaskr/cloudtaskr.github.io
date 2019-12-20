@@ -2,7 +2,7 @@
   background-color:  #fff;
   color: black;
   min-height: calc(100vh - 55px);
-  min-width: 30vw;
+  min-width: 20vw;
   position: relative;
   padding-top: 120px;
 }
@@ -14,7 +14,12 @@
 
 #task-section {
   background-color: fff;
-  width: 70vw;
+  width: 50vw;
+}
+#smart-section {
+  background-color: fff;
+  width: 30vw;
+  padding-top:120px;
 }
 .sidebar-group{
   padding-left: 15px;

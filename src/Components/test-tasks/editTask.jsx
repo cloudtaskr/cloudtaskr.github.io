@@ -20,6 +20,9 @@ import baseURL from "../../services/base";
 import EditTaskZone from "./EditTaskZone.jsx";
 
 import Calendar from "react-date-picker";
+import DatePicker from "react-datepicker";
+ 
+import "react-datepicker/dist/react-datepicker.css";
 
 class EditTask extends Component {
   constructor(props) {
@@ -36,7 +39,7 @@ class EditTask extends Component {
       },
       status: "",
       duration: "",
-      date: ""
+      date: "",
     };
   }
 
@@ -73,7 +76,7 @@ class EditTask extends Component {
         console.log(res);
         // this.setState({ title: "", description: "" });
         this.props.fetchData();
-        // this.props.history.push("/task");
+        this.props.history.push("/task");
       })
       .catch(error => console.log(error));
   };
@@ -143,6 +146,12 @@ class EditTask extends Component {
     console.log(this.state.duration);
   };
 
+  handleDateChange = date => {
+    this.setState({
+      date: date
+    });
+  };
+
   render() {
     return (
       <div>
@@ -153,7 +162,7 @@ class EditTask extends Component {
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
         /> */}
-        <Container className="edit-task">
+            <Container className="task-list-page">
           <Row>
             <Form onSubmit={this.handleUpdateTask} className="edit-form">
               <FormLabel>
@@ -267,38 +276,20 @@ class EditTask extends Component {
               Complete
             </Button>
             <hr />
-            <FormLabel>Date:</FormLabel>
-            <FormControl
+            <FormLabel>Due Date: (Coming soon)</FormLabel>
+            {/* <FormControl
               type="text"
               name="date"
               value={this.state.date}
               onChange={e => this.handleChange(e)}
-            />
-
-            <Calendar />
-
-            <hr />
-            
             /> */}
 
-              <Button
-                onClick={() => {
-                  this.setStatus("active");
-                }}
-                variant={"outline-danger"}
-                active={this.state.status === "active" ? "active" : ""}
-              >
-                Active
-              </Button>
-              <Button
-                onClick={() => {
-                  this.setStatus("complete");
-                }}
-                variant={"outline-success"}
-                active={this.state.status === "complete" ? "active" : ""}
-              >
-                Complete
-              </Button>
+            <DatePicker name="date"
+        selected={this.state.date}
+        onChange={this.handleDateChange}
+        autoComplete="no"
+      />
+
               <hr />
               <FormGroup>
                 <button className="btn btn-warning">Update</button>

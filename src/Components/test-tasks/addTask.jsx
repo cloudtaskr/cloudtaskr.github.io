@@ -30,12 +30,12 @@ export default class addTask extends Component {
   handleAddTask = event => {
     event.preventDefault();
     const title = this.state.title;
-    const description = this.state.description;
+    const duration = 60
     if (title) {
       axios
         .post(
           `${baseURL}/api/tasks`,
-          { title, description },
+          { title, duration },
           { withCredentials: true }
         )
         .then(() => {
