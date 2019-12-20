@@ -6,7 +6,7 @@ import Menu from "../Menu/Menu";
 import BackgroundWithOverlay from "../BackgroundWithOverlay/BackgroundWithOverlay";
 
 // Styling
-import { Jumbotron, Button } from "react-bootstrap";
+import { Jumbotron, Button, Card, CardDeck } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import "./Landing.css";
 
@@ -17,7 +17,8 @@ export default class Landing extends React.Component {
   }
 
   render() {
-    console.log('Render Landing')
+    console.log("Render Landing");
+    console.log("I am Kadus");
     return (
       <>
         {/* HERO, landing page background image */}
@@ -38,6 +39,12 @@ export default class Landing extends React.Component {
           </div>
         </Jumbotron>
 
+
+
+
+        
+
+
         {/* navbar */}
         <Menu
           id="landingMenuSticky"
@@ -45,13 +52,16 @@ export default class Landing extends React.Component {
           logout={this.props.logout}
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
-          setFlashMessage = {this.props.setFlashMessage}
+          setFlashMessage={this.props.setFlashMessage}
         />
 
         {/* Section 1 */}
         <section className="landingWhat">
           <h3>What does cloudTaskr do?</h3>
         </section>
+
+
+
         {/* Section 2 */}
         <section className="landingHow">
           <h3>How does cloudTaskr work?</h3>

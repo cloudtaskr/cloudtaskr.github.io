@@ -17,15 +17,18 @@ import TaskList from "./Components/test-tasks/taskList";
 import AddTask from "./Components/test-tasks/addTask";
 import EditTask from "./Components/test-tasks/editTask";
 import DeleteTask from "./Components/test-tasks/deleteTask";
-import CompleteTask from "./Components/test-tasks/completeTask";
+// import CompleteTask from "./Components/test-tasks/completeTask";
 import Loading from "./Components/Loading/Loading";
+
+import { Navbar, Container } from "react-bootstrap";
+import Style from "./Components/css/styling"
 
 // Styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Alert } from "react-bootstrap";
-import iplocation from "iplocation";
-import publicIp from "public-ip";
+// import iplocation from "iplocation";
+// import publicIp from "public-ip";
 
 class App extends React.Component {
   constructor(props) {
@@ -42,6 +45,7 @@ class App extends React.Component {
         latitude: 0,
         longitude: 0
       }
+      , showDurationAlert: true
     };
   }
 
@@ -111,6 +115,19 @@ class App extends React.Component {
     }
   };
 
+  filterDuration = (time) =>{
+  
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.duration < time)
+      
+
+      this.setState({
+        filterTaskList: filteredTasks,
+        showDurationAlert: false
+      });
+    
+  }
+
   /**
    * make call to server to get the user data and save to set state
    */
@@ -168,9 +185,8 @@ class App extends React.Component {
   filterList = tag => {
     if (tag === "complete") {
       let tasksListCopy = [...this.state.listOfTasks];
-      let filteredTasks = tasksListCopy.filter(eachTask => {
-        return eachTask.status.toLowerCase().includes("complete");
-      });
+      let filteredTasks = tasksListCopy.filter(eachTask => eachTask.status==="complete")
+      
 
       this.setState({
         filterTaskList: filteredTasks
@@ -285,6 +301,8 @@ class App extends React.Component {
     if (this.state.apiIsAwake) {
       return (
         <>
+
+
           {this.state.successMsg && (
             <Alert variant={"success"}>{this.state.successMsg}</Alert>
           )}
@@ -294,6 +312,20 @@ class App extends React.Component {
           )}
 
           <Switch>
+          <Route
+              exact
+              path="/d"
+              render={props => (
+                <Style
+                  {...props}
+                  userObj={this.state.userLoggedIn}
+                  logout={this.logout}
+                  setUser={this.setUser}
+                  fetchData={this.fetchData}
+                  setFlashMessage={this.setFeedbackMessage}
+                />
+              )}
+            />
             <Route
               exact
               path="/"
@@ -368,6 +400,8 @@ class App extends React.Component {
                   userLocation={this.state.userLocation}
                   distanceFunction={this.distanceFunction}
                   filterList={this.filterList}
+                  filterDuration={this.filterDuration}
+                  showDurationAlert={this.state.showDurationAlert}
                 />
               )}
             />
