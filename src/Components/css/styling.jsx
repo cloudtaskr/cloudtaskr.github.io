@@ -9,19 +9,22 @@ export default class Style extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        {/* <NavBar id="landingMenuSticky" {...this.props}
+          logout={this.props.logout}
+          setUser={this.props.setUser}
+          fetchData={this.props.fetchData}
+          setFlashMessage={this.props.setFlashMessage}/> */}
 
         
         <div className="landing-home" >
           <div className="welcome" >
 
-          <h1>Hello, world!</h1>
+          <h1>To-Do Lists, Tasks, Reminders & more</h1>
           <p>
-            This is a simple hero unit, a simple jumbotron-style component for
-            calling extra attention to featured content or information.
+            Reprogram your brain and automate the important rituals in your life so you have more time for what really matters.
           </p>
           <p>
-            <Button variant="primary btn-prp2">Learn more</Button>
+            <Button variant="primary btn-prp2">Try if for Free</Button>
           </p>
           </div>
           

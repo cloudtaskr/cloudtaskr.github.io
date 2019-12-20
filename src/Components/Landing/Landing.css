@@ -22,7 +22,7 @@
 /* Control the hero-container that is a part of react-bootstraps jumbotron */
 .jumbotron.hero-container {
   background-color: rgba(0, 0, 0, 0);
-  min-height: calc(100vh - 88px);
+  min-height: calc(100vh - 125px);
   display: flex;
   flex-direction: column;
   align-content: center;

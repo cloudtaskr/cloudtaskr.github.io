@@ -66,13 +66,13 @@ export default class Task extends Component {
   render() {
     return (
       <>
-        <Menu
+        {/* <Menu
           id="landingMenuSticky"
           {...this.props}
           logout={this.props.logout}
           setUser={this.props.setUser}
           // fetchData={this.props.fetchData}
-        />
+        /> */}
         {this.props.userObj ? (
           <div id="task-page">
             <aside id="task-sidebar">

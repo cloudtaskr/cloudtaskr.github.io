@@ -13,6 +13,7 @@ import LogIn from "./Containers/LoginPage/Login";
 import Task from "./Containers/TaskPage/Task";
 
 // Testing Components
+import NavBar from "./Components/css/navBar";
 import TaskList from "./Components/test-tasks/taskList";
 import AddTask from "./Components/test-tasks/addTask";
 import EditTask from "./Components/test-tasks/editTask";
@@ -302,6 +303,14 @@ class App extends React.Component {
       return (
         <>
 
+<NavBar id="landingMenuSticky" {...this.props}
+userObj={this.state.userLoggedIn}
+          logout={this.logout}
+          setUser={this.setUser}
+          fetchData={this.fetchData}
+          setFlashMessage={this.setFeedbackMessage}
+          />
+
 
           {this.state.successMsg && (
             <Alert variant={"success"}>{this.state.successMsg}</Alert>
@@ -314,7 +323,7 @@ class App extends React.Component {
           <Switch>
           <Route
               exact
-              path="/d"
+              path="/"
               render={props => (
                 <Style
                   {...props}
@@ -328,7 +337,7 @@ class App extends React.Component {
             />
             <Route
               exact
-              path="/"
+              path="/d"
               render={props => (
                 <Landing
                   {...props}

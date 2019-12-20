@@ -88,6 +88,12 @@ export default class LoginForm extends Component {
     });
   };
   render() {
+    let styles = {
+      borderRadius: "20px",
+  backgroundColor: "#2F0152",
+  borderColor: "#2F0152",
+  width: "150px"
+    }
     return (
       <>
         <Form
@@ -99,7 +105,7 @@ export default class LoginForm extends Component {
             className={this.state.classesAndIds.formGroupEmailClass}
           >
             {this.state.labels && <Form.Label>Email</Form.Label>}
-            <Form.Control
+            <Form.Control style={{width:"500px"}}
               name="email"
               type="email"
               placeholder="Enter email"
@@ -113,7 +119,7 @@ export default class LoginForm extends Component {
             className={this.state.classesAndIds.formGroupPasswordClass}
           >
             {this.state.labels && <Form.Label>Password</Form.Label>}
-            <Form.Control
+            <Form.Control style={{width:"500px"}}
               name="password"
               type="password"
               placeholder="Password"
@@ -123,7 +129,7 @@ export default class LoginForm extends Component {
           </Form.Group>
 
           <Form.Group>
-            <Button
+            <Button style={styles}
               className={this.state.classesAndIds.formButtonClass}
               type="submit"
             >

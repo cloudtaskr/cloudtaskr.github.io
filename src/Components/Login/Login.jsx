@@ -23,12 +23,12 @@ export default class LogIn extends Component {
   render() {
     return (
       <>
-        <Menu
+        {/* <Menu
           id="landingMenuSticky"
           {...this.props}
           logOut={this.props.logOut}
           setUser={this.props.setUser}
-        />
+        /> */}
         <div className="login-page" style={this.backgroundImage}>
           <div className="login-overlay"></div>
         </div>

@@ -6,7 +6,33 @@ import {Link} from "react-router-dom"
 
 import { Button } from "react-bootstrap";
 
+import Axios from "axios";
+import { LinkContainer } from "react-router-bootstrap";
+import baseURL from "../../services/base";
+
+// Custom Components
+import LoginForm from "../LoginForm/LoginForm";
+
+// Styles
+import { Navbar, Nav } from "react-bootstrap";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faTasks,
+  faSignOutAlt,
+  faWalking
+} from "@fortawesome/free-solid-svg-icons";
+
 export default class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      hideButton: false
+    };
+  }
   render() {
     return (
       <div className="container-fluid nav-style">
@@ -15,9 +41,6 @@ export default class NavBar extends Component {
           <Link to="/">
             <img className="logo" src="./images/logo.png" alt="logo" />
           </Link>
-          {/* <Link to="/" className="nav-heading">Home</Link> */}
-          {/* <Link to="/" className="nav-heading">CloudTaskr</Link> */}
-          {/* <Link to="/" className="nav-heading">Create</Link> */}
         </div>
 
         <div className="nav-middle">
@@ -25,13 +48,23 @@ export default class NavBar extends Component {
 
         <div className="nav-right">
         <Link to="/" className="nav-heading nav-heading2">Home</Link>
-        <Link to="/" className="nav-heading nav-heading2">About</Link>
-        <Link to="/" className="nav-heading">
-          <Button variant="primary btn-prp">Login</Button>
-        </Link>
-        <Link to="/" className="nav-heading">
-          <Button variant="primary btn-prp">Sign up</Button>
-        </Link>
+        <Link to="/about" className="nav-heading nav-heading2">About</Link>
+
+        {this.props.userObj ? 
+        (<>
+          <Link to="/task" className="nav-heading nav-heading2">Task</Link>
+          <Link to="/" className="nav-heading">
+            <Button variant="primary btn-prp" onClick={this.props.logout}>Log out</Button>
+          </Link>
+          </>) : (<>
+          <Link to="/login" className="nav-heading">
+            <Button variant="primary btn-prp">Login</Button>
+          </Link>
+          <Link to="/signup" className="nav-heading">
+            <Button variant="primary btn-prp">Sign up</Button>
+          </Link>
+          </>)}
+        
         </div>
 
       </div>

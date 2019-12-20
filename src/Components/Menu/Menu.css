@@ -11,6 +11,8 @@
   max-width: 0;
 }
 
+#logo {
+}
 .reveal {
   /* transition: opacity 1s ease-in-out; */
   animation-duration: 1s;
@@ -36,7 +38,24 @@
 }
 
 .sign-up {
+  padding-top: 50px;
   margin-right: 8px;
+}
+
+#logged-right-nav {
+  display: flex;
+  flex-direction: row;
+}
+#logged-right-list {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  justify-self: center;
+}
+
+.logged-items {
+  padding-right: 45px;
+  padding-top: 15px;
 }
 
 @keyframes slidein {

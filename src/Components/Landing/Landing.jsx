@@ -46,14 +46,14 @@ export default class Landing extends React.Component {
 
 
         {/* navbar */}
-        <Menu
+        {/* <Menu
           id="landingMenuSticky"
           {...this.props}
           logout={this.props.logout}
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
           setFlashMessage={this.props.setFlashMessage}
-        />
+        /> */}
 
         {/* Section 1 */}
         <section className="landingWhat">
