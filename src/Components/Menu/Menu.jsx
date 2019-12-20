@@ -80,12 +80,15 @@ export default class Menu extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  logoStyle = { width: "150px" };
   render() {
     return (
       <Navbar bg="light" variant="light" id={this.props.id}>
         {/* left side navbar */}
         <LinkContainer to="/">
-          <Navbar.Brand>cloudTaskr</Navbar.Brand>
+          <Navbar.Brand>
+            <img src="/images/logo.png" style={this.logoStyle} />
+          </Navbar.Brand>
         </LinkContainer>
         <Nav className="mr-auto">
           {/* <LinkContainer to="/">
@@ -97,8 +100,8 @@ export default class Menu extends React.Component {
             </LinkContainer>
           ) : (
             <LinkContainer to="/">
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
           )}
         </Nav>
 

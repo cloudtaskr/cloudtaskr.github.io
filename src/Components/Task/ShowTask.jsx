@@ -6,6 +6,8 @@ import DisplayTaskDetails from "./DisplayTaskDetails";
 import DisplayControls from "./DisplayControls";
 
 export default function ShowTask(props) {
+  // console.log("props in ShowTask");
+  // console.log(props);
   return (
     <Card className="task-card" key={props.task._id}>
       <Container className="task-title">
@@ -15,7 +17,11 @@ export default function ShowTask(props) {
         />
       </Container>
       <Container className="task-controls">
-        <DisplayControls theId={props.task._id} />
+        <DisplayControls
+          theId={props.task._id}
+          updateTasks={props.updateTasks}
+          handleDelete={props.handleDelete}
+        />
       </Container>
     </Card>
   );

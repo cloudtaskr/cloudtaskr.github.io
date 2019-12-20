@@ -17,7 +17,8 @@ export default class Landing extends React.Component {
   }
 
   render() {
-    console.log('Render Landing')
+    console.log("Render Landing");
+    console.log("I am Kadus");
     return (
       <>
         {/* HERO, landing page background image */}
@@ -51,7 +52,7 @@ export default class Landing extends React.Component {
           logout={this.props.logout}
           setUser={this.props.setUser}
           fetchData={this.props.fetchData}
-          setFlashMessage = {this.props.setFlashMessage}
+          setFlashMessage={this.props.setFlashMessage}
         />
 
         {/* Section 1 */}
