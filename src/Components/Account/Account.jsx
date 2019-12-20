@@ -93,11 +93,13 @@ export default class Account extends Component {
           logout={this.props.logout}
           setUser={this.props.setUser}
         /> */}
-        <BackgroundWithOverlay
+        {/* <BackgroundWithOverlay
           imgUrl="light-sun-cloud-japan-45848.jpg"
           alpha=".1"
-        />
-        <Container className="account-container">
+        /> */}
+        <Container >
+        <div className="account-container">
+          
           <Welcome userObj={this.props.userObj} />
           <section>
             <Form onSubmit={this.handleUsernameUpdate}>
@@ -167,6 +169,8 @@ export default class Account extends Component {
 
             <hr />
           </section>
+
+        </div>
         </Container>
       </>
     );
