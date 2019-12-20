@@ -24,6 +24,8 @@ import Loading from "./Components/Loading/Loading";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Alert } from "react-bootstrap";
+import iplocation from "iplocation";
+import publicIp from "public-ip";
 
 class App extends React.Component {
   constructor(props) {
@@ -35,11 +37,11 @@ class App extends React.Component {
       taskDataIsReady: false,
       errorMsg: null,
       successMsg: null,
-      apiIsAwake: false, 
+      apiIsAwake: false,
       userLocation: {
         latitude: 0,
         longitude: 0
-      },
+      }
     };
   }
 
@@ -47,12 +49,12 @@ class App extends React.Component {
    * after the first render react will run the functions in componentDidMount()
    * any time setState() is called React will render the components again
    */
-  componentDidMount() {
+  async componentDidMount() {
     console.log("Mount App");
     this.getUser();
     this.getUserLocation();
+    //=> 'fe80::200:f8ff:fe21:67cf'
   }
-
 
   getUserLocation = () => {
     let geo_success = position => {
@@ -74,31 +76,40 @@ class App extends React.Component {
       timeout: 7000
     };
 
-    navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
-  }
+    navigator.geolocation.getCurrentPosition(
+      geo_success,
+      geo_error,
+      geo_options
+    );
+  };
 
   // calculate distance of user and task zone lat/lng
-  distanceFunction = (lat1, lon1, lat2, lon2, unit)=>{
-    if ((lat1 === lat2) && (lon1 === lon2)) {
+  distanceFunction = (lat1, lon1, lat2, lon2, unit) => {
+    if (lat1 === lat2 && lon1 === lon2) {
       return 0;
-    }
-    else {
-      var radlat1 = Math.PI * lat1/180;
-      var radlat2 = Math.PI * lat2/180;
-      var theta = lon1-lon2;
-      var radtheta = Math.PI * theta/180;
-      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    } else {
+      var radlat1 = (Math.PI * lat1) / 180;
+      var radlat2 = (Math.PI * lat2) / 180;
+      var theta = lon1 - lon2;
+      var radtheta = (Math.PI * theta) / 180;
+      var dist =
+        Math.sin(radlat1) * Math.sin(radlat2) +
+        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
       if (dist > 1) {
         dist = 1;
       }
       dist = Math.acos(dist);
-      dist = dist * 180/Math.PI;
+      dist = (dist * 180) / Math.PI;
       dist = dist * 60 * 1.1515;
-      if (unit==="K") { dist = dist * 1.609344 }
-      if (unit==="N") { dist = dist * 0.8684 }
+      if (unit === "K") {
+        dist = dist * 1.609344;
+      }
+      if (unit === "N") {
+        dist = dist * 0.8684;
+      }
       return dist;
     }
-  }
+  };
 
   /**
    * make call to server to get the user data and save to set state
@@ -115,15 +126,15 @@ class App extends React.Component {
             true
           );
           setTimeout(() => {
-            this.setState({apiIsAwake: true})
-          },4000)
+            this.setState({ apiIsAwake: true });
+          }, 4000);
         } else {
           this.setFeedbackMessage(`No user is currently logged in`, false);
           setTimeout(() => {
-            this.setState({apiIsAwake: true})
-          },4000)
+            this.setState({ apiIsAwake: true });
+          }, 4000);
         }
-        this.setState({apiIsAwake: true})
+        this.setState({ apiIsAwake: true });
       })
       .catch(err => {
         this.setFeedbackMessage(
@@ -152,6 +163,50 @@ class App extends React.Component {
           false
         );
       });
+  };
+
+  filterList = tag => {
+    if (tag === "complete") {
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(eachTask => {
+        return eachTask.status.toLowerCase().includes("complete");
+      });
+
+      this.setState({
+        filterTaskList: filteredTasks
+      });
+    }
+    if (tag === "active") {
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(eachTask => {
+        return eachTask.status.toLowerCase().includes("active");
+      });
+
+      this.setState({
+        filterTaskList: filteredTasks
+      });
+    }
+
+    if (tag === "home") {
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(eachTask => {
+        return eachTask.zone.name.toLowerCase().includes("home");
+      });
+
+      this.setState({
+        filterTaskList: filteredTasks
+      });
+    }
+    if (tag === "work") {
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(eachTask => {
+        return eachTask.zone.name.toLowerCase().includes("work");
+      });
+
+      this.setState({
+        filterTaskList: filteredTasks
+      });
+    }
   };
 
   /**
@@ -280,7 +335,7 @@ class App extends React.Component {
                 />
               )}
             />
-            
+
             <Route
               exact
               path="/account"
@@ -312,6 +367,7 @@ class App extends React.Component {
                   fetchData={this.fetchData}
                   userLocation={this.state.userLocation}
                   distanceFunction={this.distanceFunction}
+                  filterList={this.filterList}
                 />
               )}
             />
@@ -364,17 +420,6 @@ class App extends React.Component {
               path="/task/delete/:id"
               render={props => (
                 <DeleteTask
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  fetchData={this.fetchData}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/task/complete/:id"
-              render={props => (
-                <CompleteTask
                   {...props}
                   userObj={this.state.userLoggedIn}
                   fetchData={this.fetchData}

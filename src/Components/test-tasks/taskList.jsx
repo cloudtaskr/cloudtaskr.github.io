@@ -12,6 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AddTask from "./addTask";
 
+import axios from "axios";
+import baseURL from "../../services/base";
 // import AddTask from "./addTask";
 export default class TaskList extends Component {
   constructor(props) {
@@ -41,8 +43,26 @@ export default class TaskList extends Component {
     // })
   };
 
+  completeTask = taskID => {
+    axios
+      .post(
+        `${baseURL}/api/task/edit/${taskID}`,
+        { status: "complete" },
+        { withCredentials: true }
+      )
+      .then(res => {
+        console.log(res);
+        // this.props.getData();
+        // this.setState({ title: "", description: "" });
+        // this.props.fetchData();
+        this.props.filterList("active");
+      })
+      .catch(error => console.log(error));
+  };
+
   displayAllTasks = () => {
     // console.log(this.props.filterTaskList)
+
     return this.props.filterTaskList.map(task => {
       return (
         // console.log(task.lat)
@@ -58,10 +78,7 @@ export default class TaskList extends Component {
           <Col>
             <h5>{task.title}</h5>
           </Col>
-          <Col>
-            <h6>{task.description}</h6>
-          </Col>
-          <Col>
+          {/* <Col>
           {Math.floor(
                     this.props.distanceFunction(
                       this.props.userLocation.latitude,
@@ -72,18 +89,23 @@ export default class TaskList extends Component {
                     )
                   )}{" "}
                   miles away
-          </Col>
+          </Col> */}
           <Col>
             <Link to={"/task/edit/" + task._id}>
-            <Button style={{ margin: "5px" }}>
-              <FontAwesomeIcon icon={faEllipsisV} />
-            </Button>
-            </Link>
-            <Link to={"/task/complete/" + task._id} variant="success">
               <Button style={{ margin: "5px" }}>
-                <FontAwesomeIcon icon={faCheck} />
+                <FontAwesomeIcon icon={faEllipsisV} />
               </Button>
             </Link>
+            {/* <Link to={"/task/complete/" + task._id} variant="success"> */}
+            <Button
+              style={{ margin: "5px" }}
+              onClick={() => {
+                this.completeTask(task._id);
+              }}
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </Button>
+            {/* </Link> */}
             <Link to={"/task/delete/" + task._id}>
               <Button style={{ margin: "5px" }} variant="danger">
                 <FontAwesomeIcon icon={faTrash} />
@@ -127,15 +149,8 @@ export default class TaskList extends Component {
               )}
 
               <Row style={{ margin: "5px" }}>
-                <Col sm={4}>
+                <Col sm={6}>
                   <Button onClick={this.addTaskMenu}>Add Task</Button>
-                </Col>
-                <Col sm={8}>
-                  <input
-                    placeholder="Search for a task"
-                    name="search"
-                    onChange={this.props.searchTasksInput}
-                  />
                 </Col>
               </Row>
 
@@ -143,6 +158,7 @@ export default class TaskList extends Component {
                 <AddTask
                   fetchData={this.props.fetchData}
                   showAddTaskMenu={this.addTaskMenu}
+                  filterList={this.props.filterList}
                 />
               ) : (
                 ""
@@ -155,7 +171,6 @@ export default class TaskList extends Component {
           </div>
         ) : (
           <Container>
-            
             <h1>Not authorized, sign up to make your first task</h1>
             <LinkContainer to="/signup">
               <Button>Sign Up</Button>
