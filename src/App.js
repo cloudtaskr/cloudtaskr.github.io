@@ -188,6 +188,27 @@ class App extends React.Component {
         });
       }
   };
+  filterWorkTasks = (arg) => {
+    if(arg==="yes"){
+
+      let tasksListCopy = [...this.state.listOfTasks];
+      let filteredTasks = tasksListCopy.filter(
+        eachTask => eachTask.zone.name === "work"
+        );
+        
+        this.setState({
+          filterTaskList: filteredTasks,
+          showWorkAlert: false,
+          countWorkAlert: 1
+        });
+      }
+      else {
+        this.setState({
+          showWorkAlert: false,
+          countWorkAlert: 1
+        });
+      }
+  };
 
   
 
@@ -473,7 +494,9 @@ class App extends React.Component {
                   filterDuration={this.filterDuration}
                   showDurationAlert={this.state.showDurationAlert}
                   filterHomeTasks={this.filterHomeTasks}
-                  showHomeAlert={this.showHomeAlert}
+                  showHomeAlert={this.state.showHomeAlert}
+                  filterWorkTasks={this.filterWorkTasks}
+                  showWorkAlert={this.state.showWorkAlert}
                 />
               )}
             />

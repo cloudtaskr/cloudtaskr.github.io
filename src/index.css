@@ -22,6 +22,14 @@ code {
   padding-top: 120px;
 }
 
+.hide {
+  display: none !important;
+}
+
+.show{
+  display: block !important;
+}
+
 .add-task-button {
   position:fixed;
 	bottom:40px;

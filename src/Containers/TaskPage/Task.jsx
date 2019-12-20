@@ -171,7 +171,9 @@ export default class Task extends Component {
                   filterDuration={this.props.filterDuration}
                   showDurationAlert={this.props.showDurationAlert}
                   filterHomeTasks={this.props.filterHomeTasks}
-                  showHomeAlert={this.props.showHomeAlert} />
+                  showHomeAlert={this.props.showHomeAlert} 
+                  filterWorkTasks={this.props.filterWorkTasks}
+                  showWorkAlert={this.props.showWorkAlert} />
             </section>
           </div>
         ) : (

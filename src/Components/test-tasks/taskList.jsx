@@ -156,7 +156,7 @@ export default class TaskList extends Component {
 
     return (
       <div>
-      <Alert show={this.props.showDurationAlert} variant="success">
+      {/* <Alert show={this.props.showDurationAlert} variant="success">
         <Alert.Heading>How's much free time do you have?!</Alert.Heading>
         <p>
           Set the number of minutes you're available and we'll recommend tasks for you to complete.
@@ -173,7 +173,7 @@ export default class TaskList extends Component {
             30 mins
           </Button>
         </div>
-      </Alert>
+      </Alert> */}
 
       {/* {!this.show && <Button onClick={() => this.setState({showDurationAlert: true})}>Show Alert</Button>} */}
         {this.props.userObj ? (
@@ -199,8 +199,6 @@ export default class TaskList extends Component {
               {/* <button onClick={this.displayAllTasks}>Filter</button> */}
               <Container>
               {/* <Row><Col xs={2}>Complete</Col><Col xs={6}>Task</Col></Row> */}
-                {this.props && this.displayAllTasks()}
-              </Container>
               {this.state.showAddTaskMenu ? (
                 <Row>
                   <Col>
@@ -215,6 +213,9 @@ export default class TaskList extends Component {
               ) : (
                 ""
               )}
+                {this.props && this.displayAllTasks()}
+              </Container>
+              
             </Container>
           </div>
         ) : (

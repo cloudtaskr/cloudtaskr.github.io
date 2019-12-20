@@ -20,7 +20,10 @@ export default class SmartTasks extends Component {
   render() {
     return (
       <div>
-        <Card style={{ width: "18rem" }}>
+        <div 
+        // className={this.props.showDurationAlert ? "show" : "hide"}
+        >
+        <Card style={{ width: "18rem" }} >
           <Card.Body>
             <Card.Title>How's much free time do you have?!</Card.Title>
             {/* <Card.Subtitle className="mb-2 text-muted">
@@ -56,6 +59,8 @@ export default class SmartTasks extends Component {
             </Button>
           </Card.Body>
         </Card>
+        </div>
+      <div className={this.props.showHomeAlert ? "show" : "hide"}>
         <Card style={{ width: "18rem" }}>
           <Card.Body>
             <Card.Title>You're near Home</Card.Title>
@@ -81,6 +86,7 @@ export default class SmartTasks extends Component {
             </Button>
           </Card.Body>
         </Card>
+        </div>
         {/* <Alert show={this.props.showHomeAlert} variant="success">
         <Alert.Heading>You're near Home</Alert.Heading>
         <p>
@@ -96,14 +102,18 @@ export default class SmartTasks extends Component {
           </Button>
         </div>
       </Alert> */}
-        <Card style={{ width: "18rem" }}>
+      <div 
+      className={this.props.showWorkAlert ? "show" : "hide"}
+      >
+          
+      <Card style={{ width: "18rem" }} >
           <Card.Body>
             <Card.Title>You're near Work</Card.Title>
             {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
             <Card.Text>Would you like to show your tasks at Work?</Card.Text>
             <Button
               onClick={() => {
-                this.props.showWorkAlert("yes");
+                this.props.filterWorkTasks("yes");
               }}
               variant="outline-success"
             >
@@ -111,14 +121,16 @@ export default class SmartTasks extends Component {
             </Button>
             <Button
               onClick={() => {
-                this.props.showWorkAlert("no");
+                this.props.filterWorkTasks("no");
               }}
-              variant="outline-red"
+              variant="outline-danger"
             >
               No
             </Button>
           </Card.Body>
         </Card>
+
+      </div>
         {/* <Alert show={this.props.toggleShowWorkAlert} variant="success">
         <Alert.Heading>You're near Work</Alert.Heading>
         <p>
