@@ -82,7 +82,7 @@ export default class Menu extends React.Component {
 
   render() {
     return (
-      <Navbar bg="dark" variant="dark" id={this.props.id}>
+      <Navbar bg="light" variant="light" id={this.props.id}>
         {/* left side navbar */}
         <LinkContainer to="/">
           <Navbar.Brand>cloudTaskr</Navbar.Brand>

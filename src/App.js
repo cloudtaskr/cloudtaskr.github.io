@@ -20,6 +20,9 @@ import DeleteTask from "./Components/test-tasks/deleteTask";
 import CompleteTask from "./Components/test-tasks/completeTask";
 import Loading from "./Components/Loading/Loading";
 
+import { Navbar, Container } from "react-bootstrap";
+import Style from "./Components/css/styling"
+
 // Styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -230,6 +233,8 @@ class App extends React.Component {
     if (this.state.apiIsAwake) {
       return (
         <>
+
+
           {this.state.successMsg && (
             <Alert variant={"success"}>{this.state.successMsg}</Alert>
           )}
@@ -239,6 +244,20 @@ class App extends React.Component {
           )}
 
           <Switch>
+          <Route
+              exact
+              path="/d"
+              render={props => (
+                <Style
+                  {...props}
+                  userObj={this.state.userLoggedIn}
+                  logout={this.logout}
+                  setUser={this.setUser}
+                  fetchData={this.fetchData}
+                  setFlashMessage={this.setFeedbackMessage}
+                />
+              )}
+            />
             <Route
               exact
               path="/"
