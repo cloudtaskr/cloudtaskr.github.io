@@ -61,8 +61,8 @@ class App extends React.Component {
    */
   async componentDidMount() {
     console.log("Mount App");
-    this.getUser();
-    this.getUserLocation();
+    // this.getUser();
+    // this.getUserLocation();
     // this.checkUserDistance();
     //=> 'fe80::200:f8ff:fe21:67cf'
   }
@@ -381,190 +381,178 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("Render App", this.state.apiIsAwake);
+    console.log("Render App");
 
-    if (this.state.apiIsAwake) {
-      return (
-        <>
-          <NavBar
-            id="landingMenuSticky"
-            {...this.props}
-            userObj={this.state.userLoggedIn}
-            logout={this.logout}
-            setUser={this.setUser}
-            fetchData={this.fetchData}
-            setFlashMessage={this.setFeedbackMessage}
+    return (
+      <>
+        <NavBar
+          id="landingMenuSticky"
+          {...this.props}
+          userObj={this.state.userLoggedIn}
+          logout={this.logout}
+          setUser={this.setUser}
+          fetchData={this.fetchData}
+          setFlashMessage={this.setFeedbackMessage}
+        />
+
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Style
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                setUser={this.setUser}
+                fetchData={this.fetchData}
+                setFlashMessage={this.setFeedbackMessage}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/d"
+            render={props => (
+              <Landing
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                setUser={this.setUser}
+                fetchData={this.fetchData}
+                setFlashMessage={this.setFeedbackMessage}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signup"
+            render={props => (
+              <Signup
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                setUser={this.setUser}
+                setFlashMessage={this.setFeedbackMessage}
+                fetchData={this.fetchData}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/login"
+            render={props => (
+              <LogIn
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                setUser={this.setUser}
+                fetchData={this.fetchData}
+                setFlashMessage={this.setFeedbackMessage}
+              />
+            )}
           />
 
-          {this.state.successMsg && (
-            <Alert variant={"success"}>{this.state.successMsg}</Alert>
-          )}
-
-          {this.state.errorMsg && (
-            <Alert variant={"danger"}>{this.state.errorMsg}</Alert>
-          )}
-
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => (
-                <Style
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  fetchData={this.fetchData}
-                  setFlashMessage={this.setFeedbackMessage}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/d"
-              render={props => (
-                <Landing
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  fetchData={this.fetchData}
-                  setFlashMessage={this.setFeedbackMessage}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={props => (
-                <Signup
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  setFlashMessage={this.setFeedbackMessage}
-                  fetchData={this.fetchData}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/login"
-              render={props => (
-                <LogIn
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  fetchData={this.fetchData}
-                  setFlashMessage={this.setFeedbackMessage}
-                />
-              )}
-            />
-
-            <Route
-              exact
-              path="/account"
-              render={props => (
-                <Account
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  getUser={this.getUser}
-                  setFlashMessage={this.setFeedbackMessage}
-                  setUser={this.setUser}
-                  taskDataIsReady={this.state.taskDataIsReady}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/task"
-              render={props => (
-                <Task
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  ready={this.state.ready}
-                  filterTaskList={this.state.filterTaskList}
-                  searchTasksInput={this.searchTaskInput}
-                  setFlashMessage={this.setFeedbackMessage}
-                  fetchData={this.fetchData}
-                  userLocation={this.state.userLocation}
-                  distanceFunction={this.distanceFunction}
-                  filterList={this.filterList}
-                  filterDuration={this.filterDuration}
-                  showDurationAlert={this.state.showDurationAlert}
-                  filterHomeTasks={this.filterHomeTasks}
-                  showHomeAlert={this.state.showHomeAlert}
-                  filterWorkTasks={this.filterWorkTasks}
-                  showWorkAlert={this.state.showWorkAlert}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/tasks"
-              render={props => (
-                <TaskList
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  filterTaskList={this.state.filterTaskList}
-                  searchTasksInput={this.searchTaskInput}
-                  setFlashMessage={this.setFeedbackMessage}
-                  fetchData={this.fetchData}
-                  userLocation={this.state.userLocation}
-                  distanceFunction={this.distanceFunction}
-                />
-              )}
-            />
-            
-            <Route
-              exact
-              path="/task/add"
-              render={props => (
-                <AddTask
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  logout={this.logout}
-                  setUser={this.setUser}
-                  filterTaskList={this.state.filterTaskList}
-                  searchTasksInput={this.searchTaskInput}
-                  fetchData={this.fetchData}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/task/edit/:id"
-              render={props => (
-                <EditTask
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  fetchData={this.fetchData}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/task/delete/:id"
-              render={props => (
-                <DeleteTask
-                  {...props}
-                  userObj={this.state.userLoggedIn}
-                  fetchData={this.fetchData}
-                />
-              )}
-            />
-          </Switch>
-        </>
-      );
-    } else {
-      return <Loading />;
-    }
+          <Route
+            exact
+            path="/account"
+            render={props => (
+              <Account
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                getUser={this.getUser}
+                setFlashMessage={this.setFeedbackMessage}
+                setUser={this.setUser}
+                taskDataIsReady={this.state.taskDataIsReady}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/task"
+            render={props => (
+              <Task
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                setUser={this.setUser}
+                ready={this.state.ready}
+                filterTaskList={this.state.filterTaskList}
+                searchTasksInput={this.searchTaskInput}
+                setFlashMessage={this.setFeedbackMessage}
+                fetchData={this.fetchData}
+                userLocation={this.state.userLocation}
+                distanceFunction={this.distanceFunction}
+                filterList={this.filterList}
+                filterDuration={this.filterDuration}
+                showDurationAlert={this.state.showDurationAlert}
+                filterHomeTasks={this.filterHomeTasks}
+                showHomeAlert={this.state.showHomeAlert}
+                filterWorkTasks={this.filterWorkTasks}
+                showWorkAlert={this.state.showWorkAlert}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/tasks"
+            render={props => (
+              <TaskList
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                setUser={this.setUser}
+                filterTaskList={this.state.filterTaskList}
+                searchTasksInput={this.searchTaskInput}
+                setFlashMessage={this.setFeedbackMessage}
+                fetchData={this.fetchData}
+                userLocation={this.state.userLocation}
+                distanceFunction={this.distanceFunction}
+              />
+            )}
+          />
+          
+          <Route
+            exact
+            path="/task/add"
+            render={props => (
+              <AddTask
+                {...props}
+                userObj={this.state.userLoggedIn}
+                logout={this.logout}
+                setUser={this.setUser}
+                filterTaskList={this.state.filterTaskList}
+                searchTasksInput={this.searchTaskInput}
+                fetchData={this.fetchData}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/task/edit/:id"
+            render={props => (
+              <EditTask
+                {...props}
+                userObj={this.state.userLoggedIn}
+                fetchData={this.fetchData}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/task/delete/:id"
+            render={props => (
+              <DeleteTask
+                {...props}
+                userObj={this.state.userLoggedIn}
+                fetchData={this.fetchData}
+              />
+            )}
+          />
+        </Switch>
+      </>
+    )
   }
 }
 
